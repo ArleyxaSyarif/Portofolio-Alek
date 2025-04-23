@@ -5,15 +5,24 @@ import Project from "@/components/ui/Project";
 import Keterampilan from "@/components/ui/Keterampilan";
 import Datadiri from "@/components/ui/Datadiri";
 import Sertifikat from "@/components/ui/Sertifikat";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+
+  useEffect(() => {
+    setIsClient(true); // Mengindikasikan bahwa kita di client
+  }, []);
+
+  if (!isClient) {
+    return null; // Jangan render komponen di server
+  }
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setIsOpen(false);
   };
   return (
     <main className="min-h-screen bg-black">
@@ -125,13 +134,9 @@ export default function Home() {
       </nav>
 
       <Profile />
-
       <Datadiri />
-
       <Keterampilan />
-
       <Project />
-
       <Sertifikat />
 
       <footer className="bg-[#0d1117] text-white py-12 mt-20">

@@ -1,3 +1,4 @@
+"use client";
 export const sertifikat = [
     {
       img1: "/img/sertikom1.png",

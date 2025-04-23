@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { projects } from "@/data/projects";
 import { cn } from "@/lib/utils";

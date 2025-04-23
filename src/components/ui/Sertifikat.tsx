@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { sertifikat } from "@/data/sertifikat";
 import { cn } from "@/lib/utils";

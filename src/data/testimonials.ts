@@ -1,3 +1,4 @@
+"use client";
 const testimonials = [
     {
       quote: "Bootstrap",
