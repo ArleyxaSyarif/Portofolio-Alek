@@ -37,7 +37,7 @@ const Profile = () => {
             transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
             className="relative z-10 text-center text-base md:text-xl mt-4 text-neutral-300"
           >
-            Siswa SMK Informatika Pesat
+            Siswa SMK Informatika Pesat Bogor
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
