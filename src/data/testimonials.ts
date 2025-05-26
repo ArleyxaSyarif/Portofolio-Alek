@@ -85,7 +85,7 @@ const testimonials = [
       colorT: "nodejs", // bisa custom sesuai gaya warna lo
     },
     {
-      quote: "Gihub",
+      quote: "Github",
       name: "",
       title: "Platform untuk menyimpan dan mengelola kode secara kolaboratif",
       img: "/img/github.png", // pastikan file ini ada ya
