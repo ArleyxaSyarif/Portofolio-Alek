@@ -2,10 +2,24 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const Datadiri = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
   return (
-    <div className="relative flex h-auto min-h-[50rem] w-full items-center justify-center bg-black py-8">
+    <motion.div
+      initial={{ opacity: 0, filter: "blur(10px)" }}
+      animate={
+        isInView
+          ? { opacity: 1, filter: "blur(0px)" }
+          : { opacity: 0, filter: "blur(10px)" }
+      }
+      transition={{ duration: 1.5, ease: "easeInOut" }}
+      className="relative flex h-auto min-h-[50rem] w-full items-center justify-center bg-black py-8"
+    >
       <div
         className={cn(
           "absolute inset-0",
@@ -16,6 +30,7 @@ const Datadiri = () => {
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
 
       <div
+        ref={ref}
         className="max-w-4xl w-full relative z-10 px-4 sm:px-6"
         id="tentangsaya"
       >
@@ -68,7 +83,7 @@ const Datadiri = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

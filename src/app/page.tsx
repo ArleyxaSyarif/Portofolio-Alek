@@ -12,7 +12,6 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-
   useEffect(() => {
     setIsClient(true); // Mengindikasikan bahwa kita di client
   }, []);
@@ -270,7 +269,7 @@ export default function Home() {
             </div>
 
             {/* Quick Links */}
-            <div>
+            <div id="kontak">
               <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
                 Quick Links
               </h3>

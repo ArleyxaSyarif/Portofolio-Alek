@@ -88,10 +88,10 @@ export const InfiniteMovingCards = ({
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
-        {items.map((item) => (
+        {items.map((item, index) => (
           <li
+            key={`${item.name}-${index}`}
             className="relative w-[350px] max-w-full shrink-0 rounded-2xl border border-b-0 border-zinc-200 bg-gradient-to-br from-white via-blue-100 to-blue-200 px-8 py-8 md:w-[450px] dark:border-zinc-700 dark:bg-gradient-to-br dark:from-blue-900 dark:via-blue-800 dark:to-blue-700 flex flex-col items-center text-center shadow-lg hover:shadow-xl transition-all duration-300"
-            key={item.name}
           >
             <blockquote>
               <div
@@ -144,7 +144,7 @@ export const InfiniteMovingCards = ({
                   <span className="text-md font-normal text-neutral-700 dark:text-gray-300">
                     {item.name}
                   </span>
-                  <span className="text-sm font-normal  dark:text-gray-400">
+                  <span className="text-sm font-normal dark:text-gray-400">
                     {item.title}
                   </span>
                 </span>
