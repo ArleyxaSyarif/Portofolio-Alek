@@ -308,7 +308,7 @@ export default function Home() {
                 </li>
                 <li>
                   <a
-                    href="#sertifikat"
+                    href="#sertifikasi"
                     className="hover:text-blue-500 transition-colors"
                   >
                     Sertifikat

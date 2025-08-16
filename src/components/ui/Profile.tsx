@@ -15,16 +15,17 @@ const Profile = () => {
     >
       <div className="max-w-4xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="relative z-10 md:ml-8">
-          <div>
+          <div className="text-center">
             <Image
               src="/img/profil1.jpeg"
               alt="Profile picture"
               width={200}
               height={200}
-              className="rounded-full border-4 border-neutral-400 md:w-[300px] md:h-[300px]"
+              className="rounded-full border-4 border-neutral-400 md:w-[300px] md:h-[300px] inline-block"
               priority
             />
           </div>
+
           <p className="relative z-10 text-center text-base md:text-xl mt-4 text-neutral-300">
             Siswa SMK Informatika Pesat Bogor
           </p>
