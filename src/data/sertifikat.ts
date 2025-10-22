@@ -8,6 +8,8 @@ export const sertifikat = [
       button: "PT WAN TEKNOLOGI",
       alt1: "Certificate Front",
       alt2: "Certificate Back",
+       color: "from-blue-500 to-cyan-500",
+      skills: ["HTML", "CSS", "Web Design"],
     },
     {
       img1: "/img/sertikom2.png",
@@ -17,6 +19,8 @@ export const sertifikat = [
       button: "PT DIMENSI KREASI NUSANTARA",
       alt1: "Certificate Front",
       alt2: "Certificate Back",
+       color: "from-purple-500 to-pink-500",
+      skills: ["Web Development", "Database", "UI/UX"],
     },
     {
       img1: "/img/sertikom3.png",
@@ -27,6 +31,8 @@ export const sertifikat = [
       button: "PT KREASI MEDIA",
       alt1: "Certificate Front",
       alt2: "Certificate Back",
+       color: "from-red-500 to-orange-500",
+      skills: ["Laravel", "PHP", "Database Design"],
     },
   ];
   
