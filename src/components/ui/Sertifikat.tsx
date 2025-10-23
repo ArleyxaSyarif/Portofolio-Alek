@@ -3,13 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ChevronLeft, ChevronRight, Award, Zap } from "lucide-react";
 import { sertifikat as sertifikatData } from "@/data/sertifikat";
+
 const Sertifikat = () => {
   const [currentSerti, setCurrentSerti] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(1);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-
-  const enhancedSertifikat = sertifikatData;
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,20 +19,26 @@ const Sertifikat = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const maxIndex = Math.ceil(sertifikatData.length / itemsPerView) - 1;
+
   const goNext = () => {
-    if (currentSerti + itemsPerView < enhancedSertifikat.length) {
-      setCurrentSerti(currentSerti + itemsPerView);
+    if (currentSerti < maxIndex) {
+      setCurrentSerti(currentSerti + 1);
     }
   };
 
   const goPrev = () => {
-    if (currentSerti - itemsPerView >= 0) {
-      setCurrentSerti(currentSerti - itemsPerView);
+    if (currentSerti > 0) {
+      setCurrentSerti(currentSerti - 1);
     }
   };
 
   const canGoPrev = currentSerti > 0;
-  const canGoNext = currentSerti + itemsPerView < enhancedSertifikat.length;
+  const canGoNext = currentSerti < maxIndex;
+
+  // Hitung item yang ditampilkan
+  const startIdx = currentSerti * itemsPerView;
+  const visibleItems = sertifikatData.slice(startIdx, startIdx + itemsPerView);
 
   return (
     <motion.div
@@ -80,23 +85,14 @@ const Sertifikat = () => {
 
         {/* Slider Container */}
         <div className="mb-12">
-          <div className="overflow-hidden rounded-2xl">
-            <motion.div
-              className="flex gap-8"
-              animate={{
-                x: `-${currentSerti * (100 / itemsPerView)}%`,
-              }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-              {enhancedSertifikat.map((item, index) => (
+          <div className="rounded-2xl">
+            <div className={`grid gap-8 ${itemsPerView === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+              {visibleItems.map((item, index) => (
                 <motion.div
-                  key={index}
-                  className={`flex-shrink-0 ${
-                    itemsPerView === 2 ? "w-1/2" : "w-full"
-                  }`}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: index * 0.1 }}
+                  key={startIdx + index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
                 >
                   <motion.div
                     whileHover={{ y: -10 }}
@@ -125,14 +121,14 @@ const Sertifikat = () => {
 
                       {/* Certificate Images */}
                       <div className="grid grid-cols-2 gap-3 mb-6 rounded-lg overflow-hidden border border-white/10">
-                        <div className="aspect-video bg-slate-800 rounded-lg">
+                        <div className="aspect-video bg-slate-800 rounded-lg overflow-hidden">
                           <img
                             src={item.img1}
                             alt={item.alt1}
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <div className="aspect-video bg-slate-800 rounded-lg">
+                        <div className="aspect-video bg-slate-800 rounded-lg overflow-hidden">
                           <img
                             src={item.img2}
                             alt={item.alt2}
@@ -179,7 +175,7 @@ const Sertifikat = () => {
                   </motion.div>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
 
@@ -207,15 +203,13 @@ const Sertifikat = () => {
 
           {/* Dots indicator */}
           <div className="flex gap-2">
-            {Array.from({
-              length: Math.ceil(enhancedSertifikat.length / itemsPerView),
-            }).map((_, idx) => (
+            {Array.from({ length: Math.ceil(sertifikatData.length / itemsPerView) }).map((_, idx) => (
               <motion.div
                 key={idx}
                 whileHover={{ scale: 1.2 }}
-                onClick={() => setCurrentSerti(idx * itemsPerView)}
+                onClick={() => setCurrentSerti(idx)}
                 className={`h-2 rounded-full cursor-pointer transition-all ${
-                  idx * itemsPerView === currentSerti
+                  idx === currentSerti
                     ? "bg-gradient-to-r from-blue-500 to-purple-500 w-8"
                     : "bg-gray-600 w-2 hover:bg-gray-500"
                 }`}
@@ -250,9 +244,9 @@ const Sertifikat = () => {
             <span className="font-bold text-white">{currentSerti + 1}</span>{" "}
             dari{" "}
             <span className="font-bold text-white">
-              {enhancedSertifikat.length}
+              {Math.ceil(sertifikatData.length / itemsPerView)}
             </span>{" "}
-            sertifikat
+            grup sertifikat
           </p>
         </motion.div>
       </div>
