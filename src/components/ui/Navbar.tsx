@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// SVG Icons inline untuk menghindari dependency eksternal
+// SVG Icons inline
 const MenuIcon = () => (
   <svg
     width="28"
@@ -97,13 +97,27 @@ const ArrowRightIcon = () => (
   </svg>
 );
 
+const MailIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("beranda");
   const [scrollY, setScrollY] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Monitor scroll position untuk dynamic styling dan progress indicator
+  // Monitor scroll position
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -116,17 +130,43 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Smooth scroll ke section dengan IntersectionObserver untuk auto-detect active link
+  // Detect active section saat scroll menggunakan IntersectionObserver
+  useEffect(() => {
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveLink(entry.target.id);
+        }
+      });
+    };
+
+    const options = {
+      threshold: 0.1,
+      rootMargin: "-100px 0px -66% 0px",
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+
+    navItems.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setActiveLink(id);
     }
-    setActiveLink(id);
     setIsOpen(false);
   };
 
-  // Navigation items dengan icon dan metadata
+  // Navigation items
   const navItems = [
     {
       id: "beranda",
@@ -155,10 +195,8 @@ export default function Navbar() {
     },
   ];
 
-  // Dynamic navbar styling based pada scroll position
   const isScrolled = scrollY > 50;
 
-  // Variant animations untuk Framer Motion
   const containerVariants = {
     hidden: { y: -100, opacity: 0 },
     visible: {
@@ -197,7 +235,7 @@ export default function Navbar() {
           : "bg-black/30 backdrop-blur-lg border-b border-white/5"
       }`}
     >
-      {/* Scroll progress indicator - subtle line di top */}
+      {/* Scroll progress indicator */}
       <motion.div
         className="absolute top-0 left-0 h-0.5 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400"
         style={{
@@ -208,17 +246,15 @@ export default function Navbar() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo dengan magnetic hover effect */}
+          {/* Logo */}
           <motion.button
             whileHover={{ scale: 1.08, y: -3 }}
             whileTap={{ scale: 0.92 }}
             onClick={() => scrollTo("beranda")}
             className="group relative"
           >
-            {/* Glow effect saat hover */}
             <div className="absolute -inset-4 bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 rounded-xl opacity-0 group-hover:opacity-25 blur-xl transition-all duration-300" />
 
-            {/* Glass morphism container */}
             <div className="relative px-6 py-3 rounded-xl bg-gradient-to-br from-white/8 to-white/5 border border-white/20 group-hover:border-cyan-500/60 backdrop-blur-sm transition-all duration-300">
               <h1 className="text-2xl font-black bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-400 bg-clip-text text-transparent drop-shadow-lg">
                 Arleyxa
@@ -226,7 +262,7 @@ export default function Navbar() {
             </div>
           </motion.button>
 
-          {/* Desktop Navigation - hidden di bawah xl */}
+          {/* Desktop Navigation */}
           <div className="hidden xl:flex items-center gap-2">
             {navItems.map((item, idx) => {
               const Icon = item.icon;
@@ -244,7 +280,6 @@ export default function Navbar() {
                   whileTap={{ scale: 0.95 }}
                   className="group relative px-4 py-2 rounded-lg transition-all"
                 >
-                  {/* Animated background gradient */}
                   <div
                     className={`absolute inset-0 rounded-lg transition-all duration-300 ${
                       isActive
@@ -253,7 +288,6 @@ export default function Navbar() {
                     }`}
                   />
 
-                  {/* Border dengan gradual fade */}
                   <div
                     className={`absolute inset-0 rounded-lg border transition-all duration-300 ${
                       isActive
@@ -262,15 +296,22 @@ export default function Navbar() {
                     }`}
                   />
 
-                  {/* Icon + Label content */}
                   <span
-                    className={`relative flex items-center gap-2.5 text-sm font-semibold transition-all ${
+                    className={`relative flex items-center gap-2.5 text-sm font-semibold transition-all pointer-events-none ${
                       isActive
                         ? "text-transparent bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text"
                         : "text-gray-400 group-hover:text-white"
                     }`}
                   >
-                    <Icon />
+                    <span
+                      className={
+                        isActive
+                          ? "text-cyan-300"
+                          : "text-gray-400 group-hover:text-white"
+                      }
+                    >
+                      <Icon />
+                    </span>
                     {item.label}
                   </span>
                 </motion.button>
@@ -278,19 +319,18 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* CTA Button - Call-to-Action dengan gradient animated */}
+          {/* CTA Button */}
           <motion.button
             whileHover={{ scale: 1.06, y: -3 }}
             whileTap={{ scale: 0.94 }}
             onClick={() => scrollTo("kontak")}
             className="hidden md:flex group relative px-6 py-2.5 rounded-lg font-bold text-sm overflow-hidden items-center gap-2.5"
           >
-            {/* Gradient background yang beranimasi */}
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 group-hover:via-purple-500 transition-all duration-500" />
             <div className="absolute inset-0.5 bg-black rounded-lg group-hover:bg-black/70 transition-colors duration-300" />
 
-            {/* Text dengan gradient clip */}
             <span className="relative text-transparent bg-gradient-to-r from-cyan-300 to-blue-300 group-hover:from-purple-300 group-hover:to-pink-300 bg-clip-text font-bold flex items-center gap-2">
+              <MailIcon />
               Kontak
               <motion.div
                 whileHover={{ x: 3 }}
@@ -301,7 +341,7 @@ export default function Navbar() {
             </span>
           </motion.button>
 
-          {/* Mobile Menu Toggle - hamburger icon dengan rotate animation */}
+          {/* Mobile Menu Toggle */}
           <motion.button
             whileHover={{ scale: 1.12 }}
             whileTap={{ scale: 0.88 }}
@@ -337,7 +377,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown - slide down dengan gradient overlay */}
+      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -366,7 +406,7 @@ export default function Navbar() {
                     }`}
                   >
                     <div
-                      className={`w-5 h-5 flex-shrink-0 flex items-center justify-center ${
+                      className={`w-5 h-5 flex-shrink-0 flex items-center justify-center pointer-events-none ${
                         isActive
                           ? "text-cyan-400 scale-110"
                           : "text-gray-500 group-hover:text-cyan-400 group-hover:scale-105"
@@ -374,11 +414,13 @@ export default function Navbar() {
                     >
                       <Icon />
                     </div>
-                    <span className="flex-1 text-left">{item.label}</span>
+                    <span className="flex-1 text-left pointer-events-none">
+                      {item.label}
+                    </span>
                     {isActive && (
                       <motion.div
                         layoutId="mobileBadge"
-                        className="w-3 h-3 rounded-full bg-gradient-to-r from-cyan-400 to-purple-400 shadow-lg shadow-cyan-400/50"
+                        className="w-3 h-3 rounded-full bg-gradient-to-r from-cyan-400 to-purple-400 shadow-lg shadow-cyan-400/50 pointer-events-none"
                         transition={{ duration: 0.3 }}
                       />
                     )}
@@ -386,7 +428,7 @@ export default function Navbar() {
                 );
               })}
 
-              {/* Mobile CTA Button */}
+              {/* Mobile CTA Button with Icon */}
               <motion.button
                 onClick={() => scrollTo("kontak")}
                 initial={{ opacity: 0, y: 15 }}
@@ -399,6 +441,7 @@ export default function Navbar() {
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 group-hover:via-purple-500 transition-all duration-500" />
                 <div className="absolute inset-0.5 bg-black rounded-lg" />
                 <span className="relative text-transparent bg-gradient-to-r from-cyan-300 to-blue-300 group-hover:from-purple-300 group-hover:to-pink-300 bg-clip-text font-bold flex items-center gap-2 justify-center transition-all">
+                  <MailIcon />
                   Hubungi Sekarang
                   <ArrowRightIcon />
                 </span>

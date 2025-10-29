@@ -181,13 +181,14 @@ const Footer = () => {
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
               <motion.a
-                href="mailto:kiritonkichan@gmail.com"
+                href="https://instagram.com/kichan._lex"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="group relative px-8 py-4 rounded-xl font-bold text-lg overflow-hidden inline-flex items-center gap-2 justify-center"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 group-hover:via-purple-500 transition-all duration-500" />
                 <div className="absolute inset-0.5 bg-black rounded-lg group-hover:bg-gray-900/50 transition-colors" />
+
                 <span className="relative text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 group-hover:from-purple-400 group-hover:to-pink-400 bg-clip-text font-bold flex items-center gap-2">
                   Hubungi Sekarang
                   <ArrowRight className="w-5 h-5 text-blue-400 group-hover:text-pink-400 transition-colors" />
@@ -200,9 +201,19 @@ const Footer = () => {
                 className="group relative px-8 py-4 rounded-xl font-bold text-lg border border-white/20 hover:border-white/40 transition-all"
               >
                 <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 rounded-xl transition-all" />
-                <span className="relative text-white group-hover:text-cyan-400 transition-colors flex items-center gap-2 justify-center">
-                  Portfolio Saya
-                </span>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document
+                      .getElementById("beranda")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  <span className="relative text-white group-hover:text-cyan-400 transition-colors flex items-center gap-2 justify-center">
+                    Portfolio Saya
+                  </span>
+                </a>
               </motion.button>
             </motion.div>
           </div>
