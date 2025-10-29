@@ -127,7 +127,7 @@ const Datadiri = () => {
                 <div className="relative bg-black p-2 rounded-3xl border border-white/10 group-hover:border-cyan-500/50 transition-all overflow-hidden">
                   <div className="w-56 h-56 md:w-64 md:h-64 rounded-3xl overflow-hidden">
                     <motion.img
-                      src="/img/profile2.jpeg"
+                      src="/img/alek.jpg"
                       alt="Profile"
                       className="w-full h-full object-cover"
                       whileHover={{ scale: 1.05 }}
