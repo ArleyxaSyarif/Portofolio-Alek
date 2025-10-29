@@ -159,10 +159,18 @@ export default function Navbar() {
 
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setActiveLink(id);
-    }
+    if (!element) return;
+
+    const yOffset = -80; // tinggi navbar kamu biar gak ketutup
+    const y =
+      element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    // Gunakan requestAnimationFrame biar lebih smooth di HP
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: y, behavior: "smooth" });
+    });
+
+    setActiveLink(id);
     setIsOpen(false);
   };
 
