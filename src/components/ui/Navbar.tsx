@@ -327,27 +327,26 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* CTA Button */}
-          <motion.button
-            whileHover={{ scale: 1.06, y: -3 }}
-            whileTap={{ scale: 0.94 }}
-            onClick={() => scrollTo("kontak")}
-            className="hidden md:flex group relative px-6 py-2.5 rounded-lg font-bold text-sm overflow-hidden items-center gap-2.5"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 group-hover:via-purple-500 transition-all duration-500" />
-            <div className="absolute inset-0.5 bg-black rounded-lg group-hover:bg-black/70 transition-colors duration-300" />
-
-            <span className="relative text-transparent bg-gradient-to-r from-cyan-300 to-blue-300 group-hover:from-purple-300 group-hover:to-pink-300 bg-clip-text font-bold flex items-center gap-2">
-              <MailIcon />
-              Kontak
-              <motion.div
-                whileHover={{ x: 3 }}
-                transition={{ type: "spring", stiffness: 400 }}
-              >
-                <ArrowRightIcon />
-              </motion.div>
-            </span>
-          </motion.button>
+          <div>
+            <a
+              href="/komentar"
+              className="inline-flex items-center justify-center
+  font-semibold 
+  py-2 px-6 
+  rounded-full 
+  text-sm 
+  text-white 
+  bg-gradient-to-r from-purple-700 to-pink-600 
+  shadow-md shadow-purple-900/40 
+  transition duration-300 
+  transform 
+  hover:scale-[1.03] 
+  hover:shadow-pink-500/50 
+  active:scale-95"
+            >
+              Komentar
+            </a>
+          </div>
 
           {/* Mobile Menu Toggle */}
           <motion.button

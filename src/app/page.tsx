@@ -8,7 +8,6 @@ import Sertifikat from "@/components/ui/Sertifikat";
 import Footer from "@/components/ui/Footer";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/ui/Navbar";
-import VisitorCounter from "@/components/ui/Visitor";
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
@@ -26,8 +25,6 @@ export default function Home() {
       <Navbar />
 
       <Profile />
-      <VisitorCounter />
-    
 
       <Datadiri />
       <Keterampilan />

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-three/fiber": "^9.1.2",
+    "@supabase/supabase-js": "^2.83.0",
     "@tabler/icons-react": "^3.31.0",
     "@types/three": "^0.175.0",
     "autoprefixer": "^10.4.21",
