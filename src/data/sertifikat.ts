@@ -34,5 +34,17 @@ export const sertifikat = [
        color: "from-red-500 to-orange-500",
       skills: ["Laravel", "PHP", "Database Design"],
     },
+{
+      img1: "/img/sertikom4.jpg",
+      img2: "/img/sertikomn4.jpg",
+      title: "Sertifikat Komputer Keempat",
+      description:
+        "Membangun Fullstack Mobile App dengan React Native dan Laravel",
+      button: "PT GINVO STUDIO",
+      alt1: "Certificate Front",
+      alt2: "Certificate Back",
+      color: "from-indigo-500 to-purple-500", // <--- WARNA BARU: Indigo ke Ungu
+      skills: ["Laravel", "React Native", "API"],
+    },
   ];
   
