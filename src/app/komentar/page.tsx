@@ -218,6 +218,7 @@ export default function KomentarPage() {
 
       <div className="container mx-auto px-4 max-w-lg lg:max-w-5xl">
         {/* --- HEADER SECTION --- */}
+        {/* ... (Header tetap sama) */}
         <div className="mb-8">
           {/* Tombol Kembali ke Halaman Sebelumnya (Di Atas) */}
           <button
@@ -239,8 +240,7 @@ export default function KomentarPage() {
             Bagikan pendapat atau tinggalkan jejak digital Anda di sini. 🌌
           </p>
         </div>
-
-        {/* --- ADMIN STATUS & BUTTONS --- */}
+        {/* ... (Admin Status & Buttons tetap sama) */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 md:mb-10 border-b border-purple-700/50 pb-4 md:pb-6 space-y-3 sm:space-y-0">
           <button
             onClick={() => fetchKomentar(currentPage)}
@@ -284,18 +284,22 @@ export default function KomentarPage() {
           )}
         </div>
 
-        {/* --- FORM KOMENTAR & LIST KOMENTAR (Side-by-Side di desktop, Stacked di mobile) --- */}
+        {/* --- FORM KOMENTAR & LIST KOMENTAR --- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* FORM KOMENTAR */}
           <div
             // Styling Cosmic Dark/Neon
-            className="p-6 md:p-8 border border-purple-700/50 rounded-2xl shadow-2xl shadow-purple-900/30 bg-[#161633]/95 backdrop-blur-sm transition duration-500 h-fit order-2 lg:order-1"
+            className="p-6 md:p-8 border border-purple-700/50 rounded-2xl shadow-2xl shadow-purple-900/30 bg-[#161633]/95 backdrop-blur-sm transition duration-500 h-fit 
+            
+            // PERUBAHAN DI SINI: order-1 (Mobile) / lg:order-1 (Desktop)
+            order-1 lg:order-1"
           >
             <h3 className="text-2xl md:text-3xl font-bold mb-6 text-purple-400 flex items-center space-x-2">
               <MessageSquare size={24} /> <span>Tulis Komentar</span>
             </h3>
 
             <form onSubmit={handleSubmit}>
+              {/* ... (Form Fields tetap sama) */}
               <div className="mb-4">
                 <label
                   htmlFor="nama"
@@ -358,10 +362,14 @@ export default function KomentarPage() {
           </div>
 
           {/* LIST KOMENTAR */}
-          <div className="space-y-6 order-1 lg:order-2">
+          <div
+            // PERUBAHAN DI SINI: order-2 (Mobile) / lg:order-2 (Desktop)
+            className="space-y-6 order-2 lg:order-2"
+          >
             <h3 className="text-2xl md:text-3xl font-bold text-cyan-400 mb-4">
               ({totalCount}) Daftar Komentar
             </h3>
+            {/* ... (Konten List Komentar & Paginasi tetap sama) */}
             {isLoadingComments ? (
               <div className="bg-[#161633] p-6 rounded-xl text-center border border-gray-700">
                 <p className="text-cyan-400 flex items-center justify-center space-x-2">
@@ -461,6 +469,7 @@ export default function KomentarPage() {
       </div>
 
       {/* --- MODAL LOGIN ADMIN --- */}
+      {/* ... (Modal tetap sama) */}
       {showLoginModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[999] transition-opacity duration-300">
           <div
