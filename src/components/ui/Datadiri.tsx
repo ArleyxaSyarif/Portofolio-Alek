@@ -19,7 +19,7 @@ const Datadiri = () => {
     { label: "Tahun Belajar", value: "3+", icon: Sparkles },
     { label: "Proyek Selesai", value: "20+", icon: Code2 },
     { label: "Teknologi", value: "13+", icon: Zap },
-    { label: "Sertifikat", value: "4+", icon: Target },
+    { label: "Sertifikat", value: "5+", icon: Target },
   ];
 
   return (
