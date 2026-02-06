@@ -28,45 +28,7 @@ interface Komentar {
 // Konfigurasi Paginasi
 const ITEMS_PER_PAGE = 4;
 
-// Komponen Alert Kustom untuk feedback yang smooth
-const CustomAlert: React.FC<{ message: string; type: "success" | "error" }> = ({
-  message,
-  type,
-}) => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 4000); // Alert hilang setelah 4 detik
-    return () => clearTimeout(timer);
-  }, [message]);
-
-  if (!isVisible) return null;
-
-  const icon =
-    type === "success" ? (
-      <UserCheck size={20} className="text-lime-300" />
-    ) : (
-      <AlertTriangle size={20} className="text-red-300" />
-    );
-  const bgColor =
-    type === "success"
-      ? "bg-lime-950/90 border-lime-600 shadow-lg shadow-lime-800/30"
-      : "bg-red-950/90 border-red-600 shadow-lg shadow-red-800/30";
-
-  return (
-    // Menambahkan kelas untuk transisi fade-in/out
-    <div
-      className={`fixed top-4 right-4 p-4 rounded-xl z-50 flex items-center space-x-3 text-white backdrop-blur-sm transition-all duration-500 ease-in-out ${bgColor} transform ${
-        isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
-      }`}
-    >
-      {icon}
-      <p className="font-semibold text-sm">{message}</p>
-    </div>
-  );
-};
+import CustomAlert from "@/components/ui/CustomAlert";
 
 export default function KomentarPage() {
   const [nama, setNama] = useState("");
@@ -207,7 +169,7 @@ export default function KomentarPage() {
       {alertMessage && <CustomAlert message={alertMessage} type={alertType} />}
 
       <div className="container mx-auto px-4 max-w-lg lg:max-w-5xl">
-       
+
         <div className="mb-8">
           <button
             onClick={handleGoBack}
@@ -319,11 +281,10 @@ export default function KomentarPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`inline-block font-bold py-3 px-6 md:px-8 rounded-full text-white transition duration-300 ease-in-out transform active:scale-95 w-full text-base md:text-lg flex items-center justify-center space-x-2 ${
-                  isSubmitting
+                className={`inline-block font-bold py-3 px-6 md:px-8 rounded-full text-white transition duration-300 ease-in-out transform active:scale-95 w-full text-base md:text-lg flex items-center justify-center space-x-2 ${isSubmitting
                     ? "bg-gray-600 cursor-not-allowed shadow-none"
                     : "bg-gradient-to-r from-purple-600 to-cyan-500 shadow-xl shadow-purple-900/50 hover:scale-[1.02] hover:shadow-cyan-500/50"
-                }`}
+                  }`}
               >
                 {isSubmitting ? (
                   <>
@@ -416,11 +377,10 @@ export default function KomentarPage() {
                   onClick={handlePrevPage}
                   disabled={currentPage === 1 || isLoadingComments}
                   // Styling Paginasi Neon
-                  className={`p-2 rounded-full transition duration-300 ${
-                    currentPage === 1 || isLoadingComments
+                  className={`p-2 rounded-full transition duration-300 ${currentPage === 1 || isLoadingComments
                       ? "text-gray-600 bg-gray-800 cursor-not-allowed"
                       : "text-cyan-400 bg-purple-900/50 border border-cyan-700 hover:bg-purple-900 transform active:scale-95 shadow-md shadow-cyan-900/30"
-                  }`}
+                    }`}
                 >
                   <ChevronLeft size={20} />
                 </button>
@@ -433,11 +393,10 @@ export default function KomentarPage() {
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages || isLoadingComments}
                   // Styling Paginasi Neon
-                  className={`p-2 rounded-full transition duration-300 ${
-                    currentPage === totalPages || isLoadingComments
+                  className={`p-2 rounded-full transition duration-300 ${currentPage === totalPages || isLoadingComments
                       ? "text-gray-600 bg-gray-800 cursor-not-allowed"
                       : "text-cyan-400 bg-purple-900/50 border border-cyan-700 hover:bg-purple-900 transform active:scale-95 shadow-md shadow-cyan-900/30"
-                  }`}
+                    }`}
                 >
                   <ChevronRight size={20} />
                 </button>
