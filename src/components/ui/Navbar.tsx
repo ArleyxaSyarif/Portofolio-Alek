@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // SVG Icons inline
 const MenuIcon = () => (
@@ -84,6 +85,20 @@ const AwardIcon = () => (
   </svg>
 );
 
+const MailIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("beranda");
@@ -139,42 +154,32 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
-  // Restored original colors mapped to text classes
+  // Unified color scheme - removed color props
   const navItems = [
     {
       id: "beranda",
       label: "Beranda",
       icon: SparklesIcon,
-      textColor: "text-cyan-400",
-      hoverColor: "hover:text-cyan-300",
     },
     {
       id: "tentangsaya",
       label: "Tentang",
       icon: UserIcon,
-      textColor: "text-blue-400",
-      hoverColor: "hover:text-blue-300",
     },
     {
       id: "keterampilan",
       label: "Skills",
       icon: ZapIcon,
-      textColor: "text-purple-400",
-      hoverColor: "hover:text-purple-300",
     },
-    { 
-      id: "projek", 
-      label: "Projek", 
+    {
+      id: "projek",
+      label: "Projek",
       icon: CodeIcon,
-      textColor: "text-pink-400", 
-      hoverColor: "hover:text-pink-300",
     },
     {
       id: "sertifikasi",
       label: "Sertifikat",
       icon: AwardIcon,
-      textColor: "text-orange-400",
-      hoverColor: "hover:text-orange-300",
     },
   ];
 
@@ -228,8 +233,8 @@ export default function Navbar() {
                   key={item.id}
                   onClick={() => scrollTo(item.id)}
                   className={`text-sm font-medium tracking-wide transition-colors duration-300 ${isActive
-                    ? item.textColor
-                    : `text-slate-400 ${item.hoverColor}`
+                    ? "text-cyan-400"
+                    : "text-slate-400 hover:text-cyan-300"
                     }`}
                 >
                   {item.label}
@@ -239,12 +244,22 @@ export default function Navbar() {
           </div>
 
           {/* Right Side Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Kontak Button */}
+            <Link
+              href="/kontak"
+              className="hidden md:flex items-center gap-2 px-5 py-2 rounded-full border border-slate-700/50 text-slate-300 text-xs font-medium tracking-widest uppercase hover:bg-white/5 hover:text-white transition-all duration-300"
+            >
+              <MailIcon />
+              Kontak
+            </Link>
+
+            {/* Komentar Button */}
             <Link
               href="/komentar"
-              className="hidden md:flex items-center gap-2 px-6 py-2 rounded-full border border-purple-400/30 text-slate-200 text-xs font-medium tracking-widest uppercase hover:bg-purple-400/5 hover:border-purple-400/60 hover:shadow-[0_0_20px_rgba(168,85,247,0.1)] transition-all duration-300 group"
+              className="hidden md:flex items-center gap-2 px-6 py-2 rounded-full border border-cyan-400/30 text-slate-200 text-xs font-medium tracking-widest uppercase hover:bg-cyan-400/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-300 group"
             >
-              <span className="group-hover:text-purple-400 transition-colors">
+              <span className="group-hover:text-cyan-400 transition-colors">
                 <svg
                   width="16"
                   height="16"
@@ -255,7 +270,7 @@ export default function Navbar() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2-2z" />
                 </svg>
               </span>
               Komentar
@@ -316,8 +331,8 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.05 }}
                     className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all ${isActive
-                      ? `bg-white/5 ${item.textColor}`
-                      : `text-slate-400 ${item.hoverColor} hover:bg-white/5`
+                      ? "bg-white/5 text-cyan-400"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
                       }`}
                   >
                     {item.label}
@@ -325,15 +340,17 @@ export default function Navbar() {
                 );
               })}
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="mt-2 text-center"
-              >
+              <div className="flex gap-3 mt-4">
+                <Link
+                  href="/kontak"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-slate-700/50 text-slate-300 text-sm font-medium hover:bg-white/5 transition-all"
+                >
+                  <MailIcon />
+                  Kontak
+                </Link>
                 <Link
                   href="/komentar"
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-lg border border-purple-400/30 text-slate-200 text-sm font-medium hover:bg-purple-400/5 transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-cyan-400/30 text-slate-200 text-sm font-medium hover:bg-cyan-400/5 transition-all"
                 >
                   <svg
                     width="16"
@@ -342,13 +359,13 @@ export default function Navbar() {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2.5"
-                    className="text-purple-400"
+                    className="text-cyan-400"
                   >
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2-2z" />
                   </svg>
                   Komentar
                 </Link>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
         )}
