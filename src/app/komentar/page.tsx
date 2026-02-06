@@ -79,23 +79,19 @@ export default function KomentarPage() {
   const [alertType, setAlertType] = useState<"success" | "error">("success");
   const [isLoadingComments, setIsLoadingComments] = useState(false);
 
-  // Paginasi
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
-  // Fungsi untuk menampilkan Alert selama 4 detik
   const triggerAlert = (message: string, type: "success" | "error") => {
     setAlertMessage(message);
     setAlertType(type);
     setTimeout(() => setAlertMessage(null), 4000);
   };
 
-  // --- Fungsi Baru: Kembali ke Halaman Sebelumnya ---
   const handleGoBack = () => {
     window.history.back();
   };
 
-  // --- 1. Ambil Komentar dari Supabase (dengan Paginasi) ---
   const fetchKomentar = async (page: number) => {
     setIsLoadingComments(true);
     const start = (page - 1) * ITEMS_PER_PAGE;
@@ -122,7 +118,6 @@ export default function KomentarPage() {
     fetchKomentar(1);
   }, []);
 
-  // --- Fungsi Paginasi ---
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   const handleNextPage = () => {
@@ -137,7 +132,6 @@ export default function KomentarPage() {
     }
   };
 
-  // --- 2. Submit Komentar Baru ---
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!nama.trim() || !isiKomentar.trim()) {
@@ -160,7 +154,6 @@ export default function KomentarPage() {
       );
       setNama("");
       setIsiKomentar("");
-      // Muat ulang halaman 1 agar komentar baru muncul di awal
       fetchKomentar(1);
     } else {
       triggerAlert(`Gagal mengirim komentar: ${error.message}`, "error");
@@ -185,7 +178,6 @@ export default function KomentarPage() {
     }
   };
 
-  // --- 4. Login Admin ---
   const handleAdminLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -210,20 +202,15 @@ export default function KomentarPage() {
   return (
     <section
       id="komentar"
-      // Latar belakang Cosmic Dark yang dalam
       className="py-12 md:py-20 bg-[#0A0A1F] text-white relative min-h-screen transition-colors duration-500"
     >
-      {/* ALERT GLOBAL */}
       {alertMessage && <CustomAlert message={alertMessage} type={alertType} />}
 
       <div className="container mx-auto px-4 max-w-lg lg:max-w-5xl">
-        {/* --- HEADER SECTION --- */}
-        {/* ... (Header tetap sama) */}
+       
         <div className="mb-8">
-          {/* Tombol Kembali ke Halaman Sebelumnya (Di Atas) */}
           <button
             onClick={handleGoBack}
-            // Styling tombol Kembali Neon
             className="inline-flex items-center space-x-1 text-cyan-400 border border-cyan-400 px-4 py-2 rounded-full font-medium bg-cyan-900/20 hover:bg-cyan-900/50 transition duration-300 transform hover:scale-[1.03] active:scale-100 shadow-md shadow-cyan-900/40 mb-8"
           >
             <ChevronLeft size={20} />
@@ -231,7 +218,6 @@ export default function KomentarPage() {
           </button>
 
           <h2
-            // Font lebih kecil di mobile, besar di desktop
             className="text-4xl md:text-6xl font-extrabold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 drop-shadow-lg transition duration-500"
           >
             Komunitas Komentar
@@ -240,11 +226,9 @@ export default function KomentarPage() {
             Bagikan pendapat atau tinggalkan jejak digital Anda di sini. 🌌
           </p>
         </div>
-        {/* ... (Admin Status & Buttons tetap sama) */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 md:mb-10 border-b border-purple-700/50 pb-4 md:pb-6 space-y-3 sm:space-y-0">
           <button
             onClick={() => fetchKomentar(currentPage)}
-            // Transisi lebih smooth
             className="inline-flex items-center space-x-2 text-gray-400 hover:text-cyan-400 transition duration-300 transform hover:scale-105 disabled:opacity-50"
             disabled={isLoadingComments}
           >
@@ -260,7 +244,6 @@ export default function KomentarPage() {
           {!isAdmin ? (
             <button
               onClick={() => setShowLoginModal(true)}
-              // Styling Neon Indigo (Diubah agar terlihat, karena sebelumnya opacity-0)
               className="inline-flex opacity-0 items-center space-x-2 text-indigo-400 border border-indigo-400 px-4 py-2 rounded-full font-medium bg-indigo-900/20 hover:bg-indigo-900/50 transition duration-300 transform hover:scale-[1.03] active:scale-100 shadow-md shadow-indigo-900/40"
             >
               <LogIn size={16} />
@@ -269,7 +252,6 @@ export default function KomentarPage() {
           ) : (
             <div className="inline-flex items-center space-x-3">
               <span
-                // Styling Neon Lime
                 className="text-xs sm:text-sm font-bold text-lime-400 bg-lime-900/50 px-3 py-1 rounded-full border border-lime-500 shadow-lg shadow-lime-800/30 transition duration-300"
               >
                 <UserCheck size={14} className="inline mr-1" /> ADMIN MODE AKTIF
@@ -284,11 +266,8 @@ export default function KomentarPage() {
           )}
         </div>
 
-        {/* --- FORM KOMENTAR & LIST KOMENTAR --- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* FORM KOMENTAR */}
           <div
-            // Styling Cosmic Dark/Neon
             className="p-6 md:p-8 border border-purple-700/50 rounded-2xl shadow-2xl shadow-purple-900/30 bg-[#161633]/95 backdrop-blur-sm transition duration-500 h-fit 
             
             // PERUBAHAN DI SINI: order-1 (Mobile) / lg:order-1 (Desktop)

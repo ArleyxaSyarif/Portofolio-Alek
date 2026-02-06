@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 // SVG Icons inline
 const MenuIcon = () => (
@@ -237,11 +238,10 @@ export default function Navbar() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
-        isScrolled
+      className={`fixed w-full top-0 z-50 transition-all duration-500 ${isScrolled
           ? "bg-black/50 backdrop-blur-2xl border-b border-white/10 shadow-2xl shadow-black/60"
           : "bg-black/30 backdrop-blur-lg border-b border-white/5"
-      }`}
+        }`}
     >
       {/* Scroll progress indicator */}
       <motion.div
@@ -289,27 +289,24 @@ export default function Navbar() {
                   className="group relative px-4 py-2 rounded-lg transition-all"
                 >
                   <div
-                    className={`absolute inset-0 rounded-lg transition-all duration-300 ${
-                      isActive
+                    className={`absolute inset-0 rounded-lg transition-all duration-300 ${isActive
                         ? "bg-gradient-to-r from-cyan-500/35 to-purple-500/35 opacity-100"
                         : "bg-gradient-to-r from-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100"
-                    }`}
+                      }`}
                   />
 
                   <div
-                    className={`absolute inset-0 rounded-lg border transition-all duration-300 ${
-                      isActive
+                    className={`absolute inset-0 rounded-lg border transition-all duration-300 ${isActive
                         ? "border-cyan-500/70 shadow-lg shadow-cyan-500/20"
                         : "border-white/10 group-hover:border-white/40"
-                    }`}
+                      }`}
                   />
 
                   <span
-                    className={`relative flex items-center gap-2.5 text-sm font-semibold transition-all pointer-events-none ${
-                      isActive
+                    className={`relative flex items-center gap-2.5 text-sm font-semibold transition-all pointer-events-none ${isActive
                         ? "text-transparent bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text"
                         : "text-gray-400 group-hover:text-white"
-                    }`}
+                      }`}
                   >
                     <span
                       className={
@@ -328,7 +325,7 @@ export default function Navbar() {
           </div>
 
           <div>
-            <a
+            <Link
               href="/komentar"
               className="inline-flex items-center justify-center
   font-semibold 
@@ -345,7 +342,7 @@ export default function Navbar() {
   active:scale-95"
             >
               Komentar
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -406,18 +403,16 @@ export default function Navbar() {
                     initial={{ opacity: 0, x: -25 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.1, duration: 0.4 }}
-                    className={`w-full group flex items-center gap-4 px-5 py-4 rounded-xl font-semibold text-base transition-all border ${
-                      isActive
+                    className={`w-full group flex items-center gap-4 px-5 py-4 rounded-xl font-semibold text-base transition-all border ${isActive
                         ? "bg-gradient-to-r from-cyan-500/30 to-purple-500/30 border-cyan-500/70 text-cyan-300 shadow-lg shadow-cyan-500/20"
                         : "border-white/10 text-gray-300 hover:bg-white/8 hover:border-cyan-500/50 hover:text-cyan-400"
-                    }`}
+                      }`}
                   >
                     <div
-                      className={`w-5 h-5 flex-shrink-0 flex items-center justify-center pointer-events-none ${
-                        isActive
+                      className={`w-5 h-5 flex-shrink-0 flex items-center justify-center pointer-events-none ${isActive
                           ? "text-cyan-400 scale-110"
                           : "text-gray-500 group-hover:text-cyan-400 group-hover:scale-105"
-                      }`}
+                        }`}
                     >
                       <Icon />
                     </div>

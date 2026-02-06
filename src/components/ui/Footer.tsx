@@ -57,7 +57,7 @@ const Footer = () => {
     {
       name: "Instagram",
       icon: Instagram,
-      url: "https://instagram.com/kichan._lex",
+      url: "https://instagram.com/mohamad._arleyxa",
       gradient: "from-pink-600 to-red-600",
       hoverGlow: "hover:shadow-pink-500/50",
     },
@@ -79,16 +79,11 @@ const Footer = () => {
       value: "Bogor, Indonesia",
       color: "text-cyan-400",
     },
-    {
-      icon: Phone,
-      label: "Telepon",
-      value: "+62 895-3986-78090",
-      color: "text-blue-400",
-    },
+
     {
       icon: Mail,
       label: "Email",
-      value: "kiritonkichan@gmail.com",
+      value: "workarleyxa@gmail.com",
       color: "text-purple-400",
     },
   ];
@@ -181,7 +176,7 @@ const Footer = () => {
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
               <motion.a
-                href="https://instagram.com/kichan._lex"
+                href="https://instagram.com/mohamad._arleyxa"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="group relative px-8 py-4 rounded-xl font-bold text-lg overflow-hidden inline-flex items-center gap-2 justify-center"
@@ -365,10 +360,7 @@ const Footer = () => {
               className="flex items-center gap-2 text-sm text-gray-400"
             >
               <span>Made with</span>
-              <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              ></motion.span>
+
               <span>by</span>
               <span className="text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text font-bold">
                 Arleyxa

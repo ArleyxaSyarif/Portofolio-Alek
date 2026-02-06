@@ -50,7 +50,7 @@ const Profile = () => {
               </svg>
             </a>
             <a
-              href="https://instagram.com/kichan._lex"
+              href="https://instagram.com/mohamad._arleyxa"
               className="relative z-10 px-2 md:px-3 py-2 rounded-full text-sm font-medium bg-gradient-to-r text-white border border-white hover:border-purple-500 transition-all duration-300"
             >
               <svg
