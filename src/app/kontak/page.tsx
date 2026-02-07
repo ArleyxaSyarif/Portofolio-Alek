@@ -7,6 +7,7 @@ import CustomAlert from "@/components/ui/CustomAlert";
 import WarningModal from "./components/WarningModal";
 import ContactForm from "./components/ContactForm";
 import ContactInfo from "./components/ContactInfo";
+import { Toaster } from "react-hot-toast";
 
 export default function KontakPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,7 +43,10 @@ export default function KontakPage() {
     };
 
     return (
+        
         <section className="min-h-screen py-12 md:py-20 bg-[#0A0A1F] text-white relative overflow-hidden">
+            <Toaster position="top-right" />
+
             {/* Background Elements */}
             <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none" />

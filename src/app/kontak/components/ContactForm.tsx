@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Send, User, Mail, MessageSquare, ArrowRight } from "lucide-react";
-
+import toast from "react-hot-toast";
 interface ContactFormProps {
     onSubmit: (e: React.FormEvent, data: { name: string; email: string; message: string }) => void;
     isSubmitting: boolean;
@@ -17,7 +17,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
         e.preventDefault();
 
 
-        await fetch("/api/send-mail", {
+        const response = await fetch("/api/send-mail", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -25,7 +25,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
             body: JSON.stringify({ name, email, message }),
         });
 
-        alert("Pesan berhasil dikirim!");
+        if (response.ok) {
+            toast.success("Pesan berhasil dikirim");
+        } else {
+            toast.error("Pesan gagal dikirim ");
+        }
         setName("");
         setEmail("");
         setMessage("");
@@ -111,6 +115,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
                 >
                     {isSubmitting ? "Mengirim..." : "Kirim Sekarang"}
                     {!isSubmitting && <ArrowRight size={20} />}
+
                 </button>
             </form>
         </div>
