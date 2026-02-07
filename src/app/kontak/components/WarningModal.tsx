@@ -42,7 +42,7 @@ const WarningModal: React.FC<WarningModalProps> = ({ isVisible, onClose }) => {
                             </div>
                             <div className="flex-1 p-8 sm:pl-6 text-center sm:text-left">
                                 <h3 className="text-lg font-semibold text-slate-900 mb-2 font-sans">
-                                    Informasi Kontak Diperlukan
+                                    Informasi Kontak
                                 </h3>
                                 <p className="text-sm text-slate-500 leading-relaxed mb-6 font-sans">
                                     Mohon isi kontak email dan nama yang benar. Data ini diperlukan untuk verifikasi identitas Anda.
