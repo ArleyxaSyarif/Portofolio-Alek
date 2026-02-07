@@ -13,9 +13,22 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
-        onSubmit(e, { name, email, message });
-        // Optional: clear form logic could be handled here or in parent if successful
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+
+        await fetch("/api/send-mail", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, email, message }),
+        });
+
+        alert("Pesan berhasil dikirim!");
+        setName("");
+        setEmail("");
+        setMessage("");
     };
 
     return (
@@ -37,6 +50,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
                         <input
                             type="text"
                             id="name"
+                            name="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className="w-full pl-12 pr-4 py-3 bg-[#0f0f25] border border-gray-700 rounded-xl focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-white placeholder-gray-600"
@@ -56,6 +70,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
                         <input
                             type="email"
                             id="email"
+                            name="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full pl-12 pr-4 py-3 bg-[#0f0f25] border border-gray-700 rounded-xl focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-white placeholder-gray-600"
@@ -74,6 +89,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
                         <MessageSquare className="absolute left-4 top-3.5 text-gray-500" size={18} />
                         <textarea
                             id="message"
+                            name="message"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             rows={4}
