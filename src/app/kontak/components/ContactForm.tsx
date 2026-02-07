@@ -47,7 +47,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
             <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2 text-gray-400">
-                        Nama Lengkap
+                        Nama Lengkap Anda
                     </label>
                     <div className="relative">
                         <User className="absolute left-4 top-3.5 text-gray-500" size={18} />
@@ -67,7 +67,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
 
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-400">
-                        Alamat Email
+                        Alamat Email Anda
                     </label>
                     <div className="relative">
                         <Mail className="absolute left-4 top-3.5 text-gray-500" size={18} />
@@ -87,7 +87,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
 
                 <div>
                     <label htmlFor="message" className="block text-sm font-medium mb-2 text-gray-400">
-                        Pesan
+                        Pesan Anda
                     </label>
                     <div className="relative">
                         <MessageSquare className="absolute left-4 top-3.5 text-gray-500" size={18} />
