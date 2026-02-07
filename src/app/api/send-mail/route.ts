@@ -5,25 +5,28 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
 
-    const { name, email, message } = await request.json();
+    const { name, email, message, token } = await request.json();
+    const secret = process.env.RECAPTCHA_SECRET;
 
-    try {
-        await resend.emails.send({
-            from: "Portofolio Arleyxa <onboarding@resend.dev>",
-            to: ["workarleyxa@gmail.com"],
-            subject: `New message from contact form`,
-            html: `
-                <h1>Ada yang ngirim email</h1>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Message:</strong> ${message}</p>
-            `,
-        });
+    const verifyRes = await fetch(
+        `https://www.google.com/recaptcha/api/siteverify`,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `secret=${secret}&response=${token}`,
+        }
+    );
+    const verifyData = await verifyRes.json();
 
-        return NextResponse.json({ success: true });
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ error }, { status: 500 });
+    if (!verifyData.success) {
+        return NextResponse.json({ message: "Captcha gagal, coba lagi!" }, { status: 400 });
     }
+
+      // lanjut kirim email / proses data
+    console.log({ name, email, message });
+
+    return NextResponse.json({ message: "Pesan berhasil dikirim!" });
+
+
 
 }
