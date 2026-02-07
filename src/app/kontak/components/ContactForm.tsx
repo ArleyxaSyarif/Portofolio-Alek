@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Send, User, Mail, MessageSquare, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
+import ReCAPTCHA from "react-google-recaptcha";
+
 interface ContactFormProps {
     onSubmit: (e: React.FormEvent, data: { name: string; email: string; message: string }) => void;
     isSubmitting: boolean;
@@ -12,27 +14,34 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!captchaToken) {
+            toast.error("Tolong centang captcha dulu!");
+            return;
+        }
 
         const response = await fetch("/api/send-mail", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ name, email, message }),
+            body: JSON.stringify({ name, email, message, token: captchaToken }),
         });
 
         if (response.ok) {
             toast.success("Pesan berhasil dikirim");
+            setName("");
+            setEmail("");
+            setMessage("");
+            setCaptchaToken(null);
         } else {
             toast.error("Pesan gagal dikirim ");
         }
-        setName("");
-        setEmail("");
-        setMessage("");
+
     };
 
     return (
@@ -105,6 +114,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
                     </div>
                 </div>
 
+                <ReCAPTCHA
+                    sitekey="6LeM3WMsAAAAABNROfwGJl41LLL0UCPkM3dggl0i"
+                    onChange={(token) => setCaptchaToken(token)}
+                    className="mb-4"
+                />
                 <button
                     type="submit"
                     disabled={isSubmitting}
