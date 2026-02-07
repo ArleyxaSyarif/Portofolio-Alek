@@ -73,28 +73,7 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
                 })}
             </div>
 
-            {/* Social Media */}
-            <div>
-                <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">
-                    Social Media
-                </p>
-                <div className="flex gap-4">
-                    {socialLinks.map((social, idx) => {
-                        const Icon = social.icon;
-                        return (
-                            <a
-                                key={idx}
-                                href={social.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`p-4 rounded-xl bg-[#161633] border border-white/10 text-gray-400 transition-all hover:scale-110 hover:border-white/30 ${social.color}`}
-                            >
-                                <Icon size={24} />
-                            </a>
-                        );
-                    })}
-                </div>
-            </div>
+
 
             {/* Map Placeholder Graphic */}
             <div className="h-40 w-full rounded-2xl overflow-hidden relative border border-white/10 group">
