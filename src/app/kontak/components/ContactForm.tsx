@@ -115,7 +115,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
                 </div>
 
                 <ReCAPTCHA
-                    sitekey="6LeM3WMsAAAAABNROfwGJl41LLL0UCPkM3dggl0i"
+                    sitekey="6LcTU2QsAAAAAC-X1tpG_dCRG5-dN-27wCp7abw7"
                     onChange={(token) => setCaptchaToken(token)}
                     className="mb-4"
                 />
