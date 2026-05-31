@@ -15,12 +15,6 @@ const Datadiri = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-  const stats = [
-    { label: "Tahun Belajar", value: "3+", icon: Sparkles },
-    { label: "Proyek Selesai", value: "20+", icon: Code2 },
-    { label: "Teknologi", value: "13+", icon: Zap },
-    { label: "Sertifikat", value: "5+", icon: Target },
-  ];
 
   return (
     <motion.section
@@ -231,37 +225,8 @@ const Datadiri = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <h2 className="text-center text-2xl md:text-3xl font-bold mb-8 text-white">
-              Pencapaian & Milestone
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {stats.map((stat, idx) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={
-                      isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                    }
-                    transition={{ duration: 0.6, delay: 0.6 + idx * 0.08 }}
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    className="group relative p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-black border border-white/10 hover:border-white/30 text-center overflow-hidden transition-all"
-                  >
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-b from-cyan-500 to-transparent transition-opacity"></div>
-                    <div className="relative">
-                      <Icon className="w-6 h-6 mx-auto mb-3 text-cyan-400 group-hover:text-purple-400 transition-colors" />
-                      <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">
-                        {stat.value}
-                      </div>
-                      <p className="text-xs md:text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-                        {stat.label}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
+
+
           </motion.div>
 
           {/* CTA Section */}
