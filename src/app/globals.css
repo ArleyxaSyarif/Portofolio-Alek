@@ -63,6 +63,33 @@
   }
 }
 
+/* Custom Animasi Running Text (Marquee) */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes scroll-reverse {
+  0% {
+    transform: translateX(-33.333%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-infinite-scroll {
+  animation: scroll 35s linear infinite;
+}
+
+.animate-infinite-scroll-reverse {
+  animation: scroll-reverse 35s linear infinite;
+}
+
 html {
   scroll-behavior: smooth;
 }

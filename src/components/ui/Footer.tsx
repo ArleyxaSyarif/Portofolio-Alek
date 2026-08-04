@@ -4,7 +4,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import {
   Mail,
-  Phone,
   MapPin,
   Github,
   Linkedin,
@@ -44,22 +43,16 @@ const Footer = () => {
       name: "Github",
       icon: Github,
       url: "https://github.com/ArleyxaSyarif",
-      gradient: "from-gray-600 to-gray-800",
-      hoverGlow: "hover:shadow-gray-500/50",
     },
     {
       name: "LinkedIn",
       icon: Linkedin,
       url: "https://www.linkedin.com/in/mohamad-arleyxa-syarif-5ab21131a/",
-      gradient: "from-blue-600 to-blue-800",
-      hoverGlow: "hover:shadow-blue-500/50",
     },
     {
       name: "Instagram",
       icon: Instagram,
       url: "https://instagram.com/mohamad._arleyxa",
-      gradient: "from-pink-600 to-red-600",
-      hoverGlow: "hover:shadow-pink-500/50",
     },
   ];
 
@@ -77,47 +70,64 @@ const Footer = () => {
       icon: MapPin,
       label: "Lokasi",
       value: "Bogor, Indonesia",
-      color: "text-cyan-400",
     },
-
     {
       icon: Mail,
       label: "Email",
       value: "workarleyxa@gmail.com",
-      color: "text-purple-400",
     },
   ];
 
   return (
-    <footer className="relative w-full bg-black overflow-hidden" id="kontak">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{ rotate: 360, y: [0, 30, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ rotate: -360, y: [0, -30, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-600/30 to-cyan-600/30 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ x: [0, 30, 0], y: [0, 20, 0] }}
-          transition={{ duration: 15, repeat: Infinity }}
-          className="absolute top-1/2 left-1/4 w-72 h-72 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl"
-        />
-      </div>
+    <footer
+      className="relative w-full bg-[#121214] text-[#e5e1e4] font-body overflow-hidden border-t border-white/10"
+      id="kontak"
+    >
+      {/* Global Style Injections */}
+      <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap");
 
-      {/* Grid background */}
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              'url(\'data:image/svg+xml?utf8,<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="white" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)" /></svg>\')',
-          }}
-        />
+        .font-display {
+          font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .font-body {
+          font-family: "Inter", sans-serif;
+        }
+
+        .bg-grid-pattern {
+          background-image: radial-gradient(
+            rgba(255, 255, 255, 0.08) 1px,
+            transparent 1px
+          );
+          background-size: 24px 24px;
+        }
+
+        .radial-mask {
+          mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+          -webkit-mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+        }
+
+        .text-gradient {
+          background: linear-gradient(to right, #ffffff, #8e9192);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      `}</style>
+
+      {/* Background Atmosphere */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-grid-pattern radial-mask opacity-60" />
       </div>
 
       <div className="relative z-10">
@@ -127,18 +137,18 @@ const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="border-b border-white/10 py-24 px-4 sm:px-8"
+          className="border-b border-white/10 py-20 md:py-28 px-5 sm:px-8"
         >
-          <div className="max-w-6xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className="mb-8"
+              className="mb-6"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/50 bg-cyan-500/5 backdrop-blur-sm">
-                <Sparkles className="w-4 h-4 text-cyan-400 animate-pulse" />
-                <span className="text-sm font-bold text-cyan-400 uppercase tracking-[0.15em]">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-[#201f21]/80 backdrop-blur-md">
+                <Sparkles className="w-3.5 h-3.5 text-[#8e9192] animate-pulse" />
+                <span className="text-xs font-semibold text-[#e5e1e4] uppercase tracking-wider">
                   Hubungi Saya
                 </span>
               </div>
@@ -148,22 +158,17 @@ const Footer = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-black mb-8 leading-tight"
+              className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight text-gradient"
             >
-              <span className="bg-gradient-to-r from-white via-cyan-200 to-blue-400 bg-clip-text text-transparent drop-shadow-lg">
-                Siap Untuk
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
-                Kolaborasi Menarik?
-              </span>
+              Siap Untuk <br />
+              <span className="text-white">Kolaborasi Menarik?</span>
             </motion.h2>
 
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto mb-12 leading-relaxed"
+              className="text-[#c4c7c8] text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-body"
             >
               Saya terbuka untuk diskusi tentang proyek baru, ide kreatif, atau
               sekadar ngobrol tentang teknologi dan inovasi.
@@ -173,105 +178,85 @@ const Footer = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
               <motion.a
                 href="https://instagram.com/mohamad._arleyxa"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-8 py-4 rounded-xl font-bold text-lg overflow-hidden inline-flex items-center gap-2 justify-center"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white text-[#121214] font-bold text-sm tracking-wide transition-all duration-300 hover:bg-[#e5e1e4] hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2 group"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 group-hover:via-purple-500 transition-all duration-500" />
-                <div className="absolute inset-0.5 bg-black rounded-lg group-hover:bg-gray-900/50 transition-colors" />
-
-                <span className="relative text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 group-hover:from-purple-400 group-hover:to-pink-400 bg-clip-text font-bold flex items-center gap-2">
-                  Hubungi Sekarang
-                  <ArrowRight className="w-5 h-5 text-blue-400 group-hover:text-pink-400 transition-colors" />
-                </span>
+                <span>Hubungi Sekarang</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </motion.a>
 
               <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-8 py-4 rounded-xl font-bold text-lg border border-white/20 hover:border-white/40 transition-all"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                  document
+                    .getElementById("beranda")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-white font-bold text-sm tracking-wide transition-all duration-300 backdrop-blur-md"
               >
-                <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 rounded-xl transition-all" />
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document
-                      .getElementById("beranda")
-                      ?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                >
-                  <span className="relative text-white group-hover:text-cyan-400 transition-colors flex items-center gap-2 justify-center">
-                    Portfolio Saya
-                  </span>
-                </a>
+                Portfolio Saya
               </motion.button>
             </motion.div>
           </div>
         </motion.div>
 
         {/* Main Footer Content */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-20">
+        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-16 md:py-20">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-16"
           >
             {/* Branding */}
             <motion.div variants={itemVariants} className="lg:col-span-1">
-              <motion.div whileHover={{ y: -5 }} className="mb-8">
-                <h3 className="text-4xl font-black bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mb-3">
+              <div className="mb-6">
+                <h3 className="font-display text-3xl font-extrabold text-white tracking-tight mb-2">
                   Arleyxa
                 </h3>
-                <div className="w-12 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full" />
-              </motion.div>
-              <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                <div className="w-10 h-0.5 bg-white/40 rounded-full" />
+              </div>
+              <p className="text-[#8e9192] text-sm leading-relaxed mb-6">
                 Fullstack Developer yang passionate dalam menciptakan solusi
-                digital yang elegant, scalable, dan user-friendly.
+                digital yang elegan, scalable, dan user-friendly.
               </p>
-              <div className="flex items-center gap-2">
-                <Heart className="w-4 h-4 text-red-500 animate-pulse" />
-                <span className="text-gray-400 text-xs">
-                  Crafted with passion
-                </span>
+              <div className="flex items-center gap-2 text-xs text-[#8e9192]">
+                <Heart className="w-3.5 h-3.5 text-white/60 fill-white/20 animate-pulse" />
+                <span>Crafted with passion</span>
               </div>
             </motion.div>
 
             {/* Contact Info */}
             <motion.div variants={itemVariants} className="lg:col-span-1">
-              <h4 className="text-lg font-bold text-white mb-8 flex items-center gap-3">
-                <div className="w-1 h-8 bg-gradient-to-b from-cyan-400 to-blue-400 rounded-full" />
+              <h4 className="font-display text-xs font-bold text-white mb-6 uppercase tracking-wider">
                 Kontak
               </h4>
-              <div className="space-y-5">
+              <div className="space-y-4">
                 {contactInfo.map((info, idx) => {
                   const Icon = info.icon;
                   return (
-                    <motion.div
-                      key={idx}
-                      whileHover={{ x: 8, color: "#fff" }}
-                      className="group cursor-pointer flex gap-4"
-                    >
-                      <div
-                        className={`p-2.5 rounded-lg bg-gradient-to-br from-gray-800 to-black border border-white/10 group-hover:border-white/30 transition-all ${info.color}`}
-                      >
+                    <div key={idx} className="flex gap-3.5 items-start">
+                      <div className="p-2 rounded-lg bg-[#201f21] border border-white/10 text-[#c6c6c7]">
                         <Icon className="w-4 h-4" />
                       </div>
-                      <div className="flex-1">
-                        <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-1">
+                      <div>
+                        <p className="text-[10px] text-[#8e9192] uppercase tracking-widest font-semibold mb-0.5">
                           {info.label}
                         </p>
-                        <p className="text-sm text-gray-300 group-hover:text-white transition-colors">
+                        <p className="text-xs text-[#e5e1e4] font-medium">
                           {info.value}
                         </p>
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
@@ -279,22 +264,21 @@ const Footer = () => {
 
             {/* Quick Links */}
             <motion.div variants={itemVariants} className="lg:col-span-1">
-              <h4 className="text-lg font-bold text-white mb-8 flex items-center gap-3">
-                <div className="w-1 h-8 bg-gradient-to-b from-purple-400 to-pink-400 rounded-full" />
+              <h4 className="font-display text-xs font-bold text-white mb-6 uppercase tracking-wider">
                 Menu
               </h4>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 {quickLinks.map((link, idx) => {
                   const Icon = link.icon;
                   return (
                     <motion.a
                       key={idx}
                       href={link.href}
-                      whileHover={{ x: 4, y: -2 }}
-                      className="group flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-white/5 to-transparent hover:from-white/10 hover:to-white/5 border border-white/10 hover:border-white/20 transition-all"
+                      whileHover={{ x: 3 }}
+                      className="flex items-center gap-2 p-2 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-white/20 transition-all duration-200"
                     >
-                      <Icon className="w-3.5 h-3.5 text-cyan-400 group-hover:text-purple-400 transition-colors" />
-                      <span className="text-xs font-semibold text-gray-300 group-hover:text-white transition-colors">
+                      <Icon className="w-3.5 h-3.5 text-[#8e9192]" />
+                      <span className="text-xs font-medium text-[#c4c7c8] hover:text-white transition-colors">
                         {link.name}
                       </span>
                     </motion.a>
@@ -305,11 +289,10 @@ const Footer = () => {
 
             {/* Social Media */}
             <motion.div variants={itemVariants} className="lg:col-span-1">
-              <h4 className="text-lg font-bold text-white mb-8 flex items-center gap-3">
-                <div className="w-1 h-8 bg-gradient-to-b from-pink-400 to-red-400 rounded-full" />
+              <h4 className="font-display text-xs font-bold text-white mb-6 uppercase tracking-wider">
                 Social
               </h4>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {socialLinks.map((social, idx) => {
                   const Icon = social.icon;
                   return (
@@ -318,16 +301,16 @@ const Footer = () => {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ x: 4, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`group flex items-center gap-3 p-3 rounded-xl border border-white/10 hover:border-white/30 bg-gradient-to-r from-white/5 to-transparent hover:from-white/10 transition-all ${social.hoverGlow} hover:shadow-lg`}
-                      title={social.name}
+                      whileHover={{ x: 3 }}
+                      className="group flex items-center justify-between p-2.5 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.07] hover:border-white/20 transition-all duration-200"
                     >
-                      <Icon className="w-4 h-4 text-gray-400 group-hover:text-white transition-colors" />
-                      <span className="text-sm font-semibold text-gray-300 group-hover:text-white transition-colors">
-                        {social.name}
-                      </span>
-                      <ArrowRight className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="flex items-center gap-3">
+                        <Icon className="w-4 h-4 text-[#8e9192] group-hover:text-white transition-colors" />
+                        <span className="text-xs font-medium text-[#c4c7c8] group-hover:text-white transition-colors">
+                          {social.name}
+                        </span>
+                      </div>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#8e9192] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
                     </motion.a>
                   );
                 })}
@@ -335,39 +318,21 @@ const Footer = () => {
             </motion.div>
           </motion.div>
 
-          {/* Divider with animation */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent origin-left mb-8"
-          />
+          {/* Divider */}
+          <div className="h-px bg-white/10 w-full mb-8" />
 
           {/* Bottom Section */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="flex flex-col sm:flex-row items-center justify-between gap-6"
-          >
-            <p className="text-sm text-gray-500 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8e9192]">
+            <p className="text-center sm:text-left">
               © {currentYear} Mohamad Arleyxa Syarif. All rights reserved.
             </p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-2 text-sm text-gray-400"
-            >
+            <div className="flex items-center gap-1.5">
               <span>Made with</span>
-
               <span>by</span>
-              <span className="text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text font-bold">
-                Arleyxa
-              </span>
-              <Heart className="w-4 h-4 text-red-500" />
-            </motion.div>
-          </motion.div>
+              <span className="text-white font-bold">Arleyxa</span>
+              <Heart className="w-3.5 h-3.5 text-white fill-white" />
+            </div>
+          </div>
         </div>
       </div>
     </footer>

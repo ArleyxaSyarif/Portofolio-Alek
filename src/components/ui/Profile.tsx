@@ -1,8 +1,30 @@
 "use client";
+
 import Image from "next/image";
 import React from "react";
 import { Meteors } from "@/components/magicui/meteors";
 import { motion } from "framer-motion";
+
+// SVG Icons (Monokrom)
+const CodeIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="16 18 22 12 16 6" />
+    <polyline points="8 6 2 12 8 18" />
+  </svg>
+);
+
+const CameraIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+    <circle cx="12" cy="13" r="4" />
+  </svg>
+);
+
+const ChatIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+  </svg>
+);
 
 const Profile = () => {
   return (
@@ -10,107 +32,144 @@ const Profile = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="min-h-screen w-full rounded-md relative flex items-center justify-center antialiased bg-black"
+      className="min-h-screen w-full relative flex items-center justify-center antialiased bg-[#0c0c0e] overflow-hidden px-6 py-20"
       id="beranda"
     >
-      <div className="max-w-4xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="relative z-10 md:ml-8">
-          <div className="text-center">
-            <Image
-              src="/img/profil1.jpeg"
-              alt="Profile picture"
-              width={200}
-              height={200}
-              className="rounded-full border-4 border-neutral-400 md:w-[300px] md:h-[300px] inline-block"
-              priority
-            />
-          </div>
+      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
 
-          <p className="relative z-10 text-center text-base md:text-xl mt-4 text-neutral-300">
-            Siswa SMK Informatika Pesat Bogor
-          </p>
-          <p className="relative z-10 font-bold text-center text-xs md:text-sm mt-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-blue-600">
-            Fullstack Developer | UI/UX
-          </p>
-
-          <div className="flex mt-6 md:mt-8 items-center justify-center gap-4">
-            <a
-              href="https://github.com/ArleyxaSyarif"
-              className="relative z-10 px-2 md:px-3 py-2 rounded-full text-sm font-medium bg-gradient-to-r text-white border border-white hover:border-purple-500 transition-all duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="md:w-[18px] md:h-[20px]"
-              >
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
-            </a>
-            <a
-              href="https://instagram.com/mohamad._arleyxa"
-              className="relative z-10 px-2 md:px-3 py-2 rounded-full text-sm font-medium bg-gradient-to-r text-white border border-white hover:border-purple-500 transition-all duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="md:w-[18px] md:h-[20px]"
-              >
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
-            </a>
-
-            <a
-              href="https://discord.com/users/kichan9190"
-              className="relative z-10 px-2 md:px-3 py-2 rounded-full text-sm font-medium bg-gradient-to-r text-white border border-white hover:border-purple-500 transition-all duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="md:w-[18px] md:h-[20px]"
-              >
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <div className="flex-1 text-center md:text-left mb-8 md:mb-0">
-          <h1 className="relative z-10 text-3xl md:text-7xl bg-clip-text text-transparent bg-gradient-to-b from-purple-200 to-blue-600 font-sans font-bold">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-blue-600">
-              Mohamad Arleyxa Syarif
-            </span>
+        {/* KOLOM KIRI: Informasi Utama */}
+        <div className="lg:col-span-7 flex flex-col items-start text-left">
+          {/* Judul Nama */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1]">
+            Mohamad <br />
+            Arleyxa Syarif
           </h1>
-          <p className="relative z-10 text-sm md:text-lg mt-5 bg-clip-text text-white bg-gradient-to-r">
+
+          {/* Garis Aksen */}
+          <div className="w-16 h-[3px] bg-neutral-700/80 my-6 rounded-full" />
+
+          {/* Deskripsi Singkat */}
+          <p className="text-neutral-400 text-sm md:text-base leading-relaxed max-w-lg mb-8 font-normal">
             Pengembang Web dan UI/UX dengan dedikasi untuk menciptakan website
-            yang indah dan fungsional.
+            yang indah, fungsional, dan memberikan pengalaman pengguna yang tak terlupakan.
           </p>
 
-          <div className="flex gap-6 mt-8 justify-center md:justify-start">
+          {/* Informasi Sekolah & Peran */}
+          <div className="mb-8">
+            <p className="text-neutral-200 text-sm font-semibold">
+              Seorang Software Engineer | Frontend Developer yang ingin berkembang di dunia Teknologi.
+            </p>
+            <p className="text-xs font-bold tracking-widest text-neutral-400 uppercase mt-1">
+              SOFTWARE ENGINEER | FRONTEND DEVELOPER
+            </p>
+          </div>
+
+          {/* Tombol Aksi Utama */}
+          <div className="flex items-center gap-4 mb-10">
             <a
               href="#sertifikasi"
-              className="relative z-10 px-6 md:px-8 py-2 md:py-3 rounded-md text-sm md:text-base font-medium bg-gradient-to-r from-purple-500 to-blue-600 text-white hover:from-purple-300 hover:to-blue-700 transition-all duration-300 ease-in-out"
+              className="px-7 py-2.5 rounded-full bg-white text-black font-semibold text-xs md:text-sm hover:bg-neutral-200 transition-all duration-300 shadow-md"
             >
               Sertifikasi
             </a>
             <a
               href="#tentangsaya"
-              className="relative z-10 px-6 md:px-8 py-2 md:py-3 rounded-md text-sm md:text-base font-medium bg-transparent border-2 border-gray-400 text-white hover:border-purple-500 transition-all duration-300 ease-in-out"
+              className="px-7 py-2.5 rounded-full bg-neutral-900/90 border border-neutral-800 text-white font-semibold text-xs md:text-sm hover:bg-neutral-800 transition-all duration-300"
             >
               Tentang Saya
             </a>
           </div>
+
+          {/* Icon Social Media */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/ArleyxaSyarif"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="w-10 h-10 rounded-full bg-neutral-900/90 border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:border-neutral-600 transition-all duration-300"
+            >
+              <CodeIcon />
+            </a>
+            <a
+              href="https://instagram.com/mohamad._arleyxa"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="w-10 h-10 rounded-full bg-neutral-900/90 border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:border-neutral-600 transition-all duration-300"
+            >
+              <CameraIcon />
+            </a>
+            <a
+              href="https://discord.com/users/kichan9190"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Discord"
+              className="w-10 h-10 rounded-full bg-neutral-900/90 border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:border-neutral-600 transition-all duration-300"
+            >
+              <ChatIcon />
+            </a>
+          </div>
+        </div>
+
+        {/* KOLOM KANAN: Foto Profil (Enhanced) */}
+        <div className="lg:col-span-5 flex justify-center lg:justify-end w-full relative group">
+          {/* 1. Ambient Background Glow (Membuat kartu foto lebih menonjol) */}
+          <div className="absolute -inset-1 bg-gradient-to-tr from-white/10 via-neutral-500/10 to-transparent rounded-[36px] blur-xl opacity-70 group-hover:opacity-100 transition duration-700 pointer-events-none" />
+
+          {/* Kartu Utama Foto */}
+          <div className="relative w-full max-w-sm sm:max-w-md aspect-[3/4] rounded-[32px] overflow-hidden border border-neutral-800/80 shadow-2xl bg-neutral-950/80">
+
+            {/* Foto Profil Utama */}
+            <Image
+              src="/img/alek.jpg"
+              alt="Mohamad Arleyxa Syarif"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              priority
+            />
+
+            {/* Overlay Gradien Halus */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/90 via-transparent to-black/20 opacity-80 pointer-events-none" />
+
+            {/* 2. Floating Status Badge (Pojok Kiri Atas) */}
+            <div className="absolute top-4 left-4 z-20">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900/80 backdrop-blur-md border border-neutral-700/50 shadow-lg">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className="text-[11px] font-medium text-neutral-200 tracking-wide">
+                  Available for work
+                </span>
+              </div>
+            </div>
+
+            {/* 3. Floating Glassmorphism Info Card (Pojok Bawah) */}
+            <div className="absolute bottom-4 left-4 right-4 z-20">
+              <div className="p-3.5 rounded-2xl bg-neutral-900/70 backdrop-blur-md border border-white/10 shadow-xl flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-bold text-white tracking-wide">
+                    Mohamad Arleyxa
+                  </p>
+                  <p className="text-[11px] text-neutral-400 font-medium mt-0.5">
+                    Software Engineer | Frontend Developer
+                  </p>
+                </div>
+
+                {/* Tech Tag / Badge Kecil */}
+                <span className="px-2.5 py-1 rounded-lg bg-white/10 border border-white/10 text-[10px] font-mono font-semibold text-neutral-300">
+                  SMK Pesat
+                </span>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
-      <div className="absolute inset-0 overflow-hidden">
+
+      {/* Efek Meteors */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <Meteors />
       </div>
     </motion.div>

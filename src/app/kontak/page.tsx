@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronLeft } from "lucide-react";
-import { AnimatePresence } from "framer-motion";
+import { ChevronLeft, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import CustomAlert from "@/components/ui/CustomAlert";
 import WarningModal from "./components/WarningModal";
 import ContactForm from "./components/ContactForm";
@@ -25,7 +25,10 @@ export default function KontakPage() {
         window.history.back();
     };
 
-    const handleSubmit = async (e: React.FormEvent, data: { name: string; email: string; message: string }) => {
+    const handleSubmit = async (
+        e: React.FormEvent,
+        data: { name: string; email: string; message: string }
+    ) => {
         e.preventDefault();
         if (!data.name.trim() || !data.email.trim() || !data.message.trim()) {
             triggerAlert("Harap isi semua kolom!", "error");
@@ -37,50 +40,113 @@ export default function KontakPage() {
         // Simulate API call
         setTimeout(() => {
             setIsSubmitting(false);
-            triggerAlert("Pesan berhasil dikirim! Saya akan segera membalasnya. 🚀", "success");
-            // Form clearing logic would typically happen here if controlled by parent state
+            triggerAlert(
+                "Pesan berhasil dikirim! Saya akan segera membalasnya. 🚀",
+                "success"
+            );
         }, 1500);
     };
 
     return (
-        
-        <section className="min-h-screen py-12 md:py-20 bg-[#0A0A1F] text-white relative overflow-hidden">
+        <section className="relative w-full min-h-screen bg-[#121214] text-[#e5e1e4] py-16 md:py-24 overflow-hidden flex flex-col justify-center font-body">
+            {/* Global Style Injections */}
+            <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap");
+
+        .font-display {
+          font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .font-body {
+          font-family: "Inter", sans-serif;
+        }
+
+        .bg-grid-pattern {
+          background-image: radial-gradient(
+            rgba(255, 255, 255, 0.08) 1px,
+            transparent 1px
+          );
+          background-size: 24px 24px;
+        }
+
+        .radial-mask {
+          mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+          -webkit-mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+        }
+
+        .text-gradient {
+          background: linear-gradient(to right, #ffffff, #8e9192);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      `}</style>
+
+            {/* Background Atmosphere & Grid */}
+            <div className="absolute inset-0 z-0 bg-grid-pattern radial-mask pointer-events-none opacity-50" />
+            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
+
+            {/* Notifications & Modals */}
             <Toaster position="top-right" />
 
-            {/* Background Elements */}
-            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none" />
-
-            {/* Warning Popup Modal */}
             <AnimatePresence>
-                <WarningModal isVisible={showWarning} onClose={() => setShowWarning(false)} />
+                <WarningModal
+                    isVisible={showWarning}
+                    onClose={() => setShowWarning(false)}
+                />
             </AnimatePresence>
 
-            {alertMessage && <CustomAlert message={alertMessage} type={alertType} />}
+            {alertMessage && (
+                <CustomAlert message={alertMessage} type={alertType} />
+            )}
 
-            <div className="container mx-auto px-4 max-w-6xl relative z-10">
-                {/* Header */}
-                <div className="mb-10">
+            {/* Main Container */}
+            <div className="max-w-[1280px] mx-auto px-5 md:px-16 relative z-10 w-full">
+                {/* Navigation / Back Button */}
+                <div className="mb-8">
                     <button
                         onClick={handleGoBack}
-                        className="inline-flex items-center space-x-2 text-cyan-400 hover:text-white transition duration-300 mb-6 group"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-[#201f21]/80 hover:bg-white/10 text-[#e5e1e4] hover:text-white transition-all duration-300 text-xs font-semibold backdrop-blur-md group"
                     >
-                        <div className="p-2 rounded-full bg-cyan-900/20 group-hover:bg-cyan-900/50 border border-cyan-500/30 transition-all">
-                            <ChevronLeft size={20} />
-                        </div>
-                        <span className="font-medium text-sm">Kembali</span>
+                        <ChevronLeft
+                            size={16}
+                            className="group-hover:-translate-x-0.5 transition-transform text-[#8e9192] group-hover:text-white"
+                        />
+                        <span>Kembali</span>
                     </button>
+                </div>
 
-                    <h1 className="text-4xl md:text-6xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-400 drop-shadow-lg">
+                {/* Header Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="mb-12 md:mb-16 max-w-3xl"
+                >
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-[#201f21]/80 backdrop-blur-md mb-6 text-xs font-semibold tracking-wider text-[#e5e1e4] uppercase shadow-sm">
+                        <Sparkles className="w-3.5 h-3.5 text-[#8e9192]" />
+                        <span>Mari Terhubung</span>
+                    </div>
+
+                    <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-gradient mb-4">
                         Hubungi Saya
                     </h1>
-                    <p className="text-gray-400 text-lg max-w-2xl font-light">
+                    <p className="font-body text-base md:text-lg text-[#c4c7c8] leading-relaxed">
                         Tertarik untuk berkolaborasi atau sekadar berdiskusi tentang teknologi?
                         Jangan ragu untuk mengirim pesan.
                     </p>
-                </div>
+                </motion.div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+                {/* Content Layout Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
                     {/* Form Section */}
                     <div className="order-2 lg:order-1">
                         <ContactForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />

@@ -3,114 +3,44 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
-// SVG Icons inline
+// SVG Icons Inline (Monokrom)
 const MenuIcon = () => (
-  <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-  >
-    <path d="M3 6h18M3 12h18M3 18h18" />
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M3 12h18M3 6h18M3 18h18" />
   </svg>
 );
 
 const CloseIcon = () => (
-  <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-  >
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M18 6L6 18M6 6l12 12" />
   </svg>
 );
 
-const SparklesIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-  </svg>
-);
-
-const UserIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" />
-  </svg>
-);
-
-const ZapIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-  </svg>
-);
-
-const CodeIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <polyline points="16 18 22 12 16 6" />
-    <polyline points="8 6 2 12 8 18" />
-  </svg>
-);
-
-const AwardIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <circle cx="12" cy="8" r="7" />
-    <polyline points="8 16 12 19 16 16" />
-  </svg>
-);
-
 const MailIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <rect x="2" y="4" width="20" height="16" rx="2" />
     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
+
+const CommentIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
   </svg>
 );
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("beranda");
-  const [scrollY, setScrollY] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const navItems = [
+    { id: "beranda", label: "Beranda" },
+    { id: "tentangsaya", label: "Tentang" },
+    { id: "keterampilan", label: "Skills" },
+    { id: "projek", label: "Projek" },
+    { id: "sertifikasi", label: "Sertifikat" },
+  ];
 
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
@@ -121,18 +51,14 @@ export default function Navbar() {
       });
     };
 
-    const options = {
-      threshold: 0.1,
-      rootMargin: "-100px 0px -66% 0px",
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, options);
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.2,
+      rootMargin: "-80px 0px -50% 0px",
+    });
 
     navItems.forEach((item) => {
       const element = document.getElementById(item.id);
-      if (element) {
-        observer.observe(element);
-      }
+      if (element) observer.observe(element);
     });
 
     return () => observer.disconnect();
@@ -143,233 +69,139 @@ export default function Navbar() {
     if (!element) return;
 
     const yOffset = -80;
-    const y =
-      element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
-    window.requestAnimationFrame(() => {
-      window.scrollTo({ top: y, behavior: "smooth" });
-    });
-
+    window.scrollTo({ top: y, behavior: "smooth" });
     setActiveLink(id);
     setIsOpen(false);
   };
 
-  // Unified color scheme - removed color props
-  const navItems = [
-    {
-      id: "beranda",
-      label: "Beranda",
-      icon: SparklesIcon,
-    },
-    {
-      id: "tentangsaya",
-      label: "Tentang",
-      icon: UserIcon,
-    },
-    {
-      id: "keterampilan",
-      label: "Skills",
-      icon: ZapIcon,
-    },
-    {
-      id: "projek",
-      label: "Projek",
-      icon: CodeIcon,
-    },
-    {
-      id: "sertifikasi",
-      label: "Sertifikat",
-      icon: AwardIcon,
-    },
-  ];
-
-  const isScrolled = scrollY > 20;
-
-  const containerVariants = {
-    hidden: { y: -100, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        type: "spring",
-        stiffness: 60,
-        damping: 15,
-      },
-    },
-  };
-
   return (
-    <motion.header
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="fixed top-6 left-0 right-0 z-50 px-4 md:px-0"
-    >
-      <div className="max-w-5xl mx-auto">
-        <nav
-          className={`rounded-full px-5 md:px-8 py-3 flex items-center justify-between transition-all duration-300 ${isScrolled
-            ? "bg-[#121214]/80 backdrop-blur-xl border border-white/[0.08] shadow-lg shadow-black/20"
-            : "bg-[#121214]/60 backdrop-blur-xl border border-white/[0.06]"
-            }`}
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#121212] border-b border-neutral-800/80">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+
+        {/* LOGO */}
+        <button
+          onClick={() => scrollTo("beranda")}
+          className="text-2xl font-bold tracking-tight text-white hover:opacity-90 transition-opacity"
         >
-          {/* Logo */}
-          <div className="flex items-center">
-            <button
-              onClick={() => scrollTo("beranda")}
-              className="text-xl font-extrabold tracking-tight text-white hover:opacity-80 transition-opacity"
-            >
-              Arley<span className="text-cyan-400">xa</span>
-            </button>
-          </div>
+          Arleyxa
+        </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8 lg:gap-10">
-            {navItems.map((item) => {
-              const isActive = activeLink === item.id;
+        {/* DESKTOP NAVIGATION */}
+        <nav className="hidden lg:flex items-center gap-8">
+          {navItems.map((item) => {
+            const isActive = activeLink === item.id;
 
-              return (
+            return (
+              <div key={item.id} className="relative py-1">
                 <button
-                  key={item.id}
                   onClick={() => scrollTo(item.id)}
-                  className={`text-sm font-medium tracking-wide transition-colors duration-300 ${isActive
-                    ? "text-cyan-400"
-                    : "text-slate-400 hover:text-cyan-300"
+                  className={`text-sm tracking-wide transition-colors duration-200 ${isActive
+                    ? "text-white font-bold"
+                    : "text-neutral-400 font-medium hover:text-neutral-200"
                     }`}
                 >
                   {item.label}
                 </button>
-              );
-            })}
-          </div>
 
-          {/* Right Side Actions */}
-          <div className="flex items-center gap-3">
-            {/* Kontak Button */}
-            <Link
-              href="/kontak"
-              className="hidden md:flex items-center gap-2 px-5 py-2 rounded-full border border-slate-700/50 text-slate-300 text-xs font-medium tracking-widest uppercase hover:bg-white/5 hover:text-white transition-all duration-300"
-            >
-              <MailIcon />
-              Kontak
-            </Link>
-
-            {/* Komentar Button */}
-            <Link
-              href="/komentar"
-              className="hidden md:flex items-center gap-2 px-6 py-2 rounded-full border border-cyan-400/30 text-slate-200 text-xs font-medium tracking-widest uppercase hover:bg-cyan-400/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-300 group"
-            >
-              <span className="group-hover:text-cyan-400 transition-colors">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2-2z" />
-                </svg>
-              </span>
-              Komentar
-            </Link>
-
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-white hover:text-cyan-400 transition-colors"
-            >
-              <AnimatePresence mode="wait">
-                {isOpen ? (
+                {isActive && (
                   <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <CloseIcon />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="open"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <MenuIcon />
-                  </motion.div>
+                    layoutId="activeUnderline"
+                    className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-white rounded-full"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
                 )}
-              </AnimatePresence>
-            </button>
-          </div>
+              </div>
+            );
+          })}
         </nav>
+
+        {/* DESKTOP ACTIONS (KONTAK, KOMENTAR, HIRE ME) */}
+        <div className="hidden md:flex items-center gap-3">
+          {/* Tombol Kontak */}
+          <Link
+            href="/kontak"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-700/80 text-neutral-300 text-xs font-semibold tracking-wider uppercase hover:bg-neutral-800 hover:text-white transition-all duration-200"
+          >
+            <MailIcon />
+            Kontak
+          </Link>
+
+          {/* Tombol Komentar */}
+          <Link
+            href="/komentar"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-700/80 text-neutral-300 text-xs font-semibold tracking-wider uppercase hover:bg-neutral-800 hover:text-white transition-all duration-200"
+          >
+            <CommentIcon />
+            Komentar
+          </Link>
+
+
+        </div>
+
+        {/* MOBILE MENU TOGGLE */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="lg:hidden text-white p-2 hover:bg-neutral-800 rounded-lg transition-colors"
+          aria-label="Toggle Menu"
+        >
+          {isOpen ? <CloseIcon /> : <MenuIcon />}
+        </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* DROPDOWN MENU MOBILE */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden absolute top-20 left-4 right-4 p-4 rounded-2xl bg-[#121214]/90 backdrop-blur-2xl border border-white/[0.08] shadow-xl overflow-hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-[#121212] border-b border-neutral-800 px-6 py-6"
           >
-            <div className="flex flex-col gap-2">
-              {navItems.map((item, idx) => {
+            <div className="flex flex-col gap-4">
+              {navItems.map((item) => {
                 const isActive = activeLink === item.id;
-
                 return (
-                  <motion.button
+                  <button
                     key={item.id}
                     onClick={() => scrollTo(item.id)}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.05 }}
-                    className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all ${isActive
-                      ? "bg-white/5 text-cyan-400"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                    className={`text-left text-base transition-colors ${isActive ? "text-white font-bold" : "text-neutral-400"
                       }`}
                   >
                     {item.label}
-                  </motion.button>
+                  </button>
                 );
               })}
 
-              <div className="flex gap-3 mt-4">
-                <Link
-                  href="/kontak"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-slate-700/50 text-slate-300 text-sm font-medium hover:bg-white/5 transition-all"
-                >
-                  <MailIcon />
-                  Kontak
-                </Link>
-                <Link
-                  href="/komentar"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-cyan-400/30 text-slate-200 text-sm font-medium hover:bg-cyan-400/5 transition-all"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    className="text-cyan-400"
+              {/* Tombol Aksi Mobile */}
+              <div className="pt-4 border-t border-neutral-800 flex flex-col gap-2.5">
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    href="/kontak"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-full border border-neutral-700 text-neutral-300 text-xs font-semibold tracking-wider uppercase hover:bg-neutral-800"
                   >
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2-2z" />
-                  </svg>
-                  Komentar
-                </Link>
+                    <MailIcon />
+                    Kontak
+                  </Link>
+
+                  <Link
+                    href="/komentar"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-full border border-neutral-700 text-neutral-300 text-xs font-semibold tracking-wider uppercase hover:bg-neutral-800"
+                  >
+                    <CommentIcon />
+                    Komentar
+                  </Link>
+                </div>
+
+
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }

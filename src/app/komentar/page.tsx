@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-// Pastikan path ke supabaseClient benar
+import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabaseClient";
 
 // Tipe data Komentar
@@ -113,7 +113,7 @@ export default function KomentarPage() {
     }
   };
 
-  // --- 3. Hapus Komentar (Hanya Admin) ---
+  // --- Hapus Komentar (Hanya Admin) ---
   const handleDelete = async (id: number) => {
     if (
       !window.confirm(
@@ -139,7 +139,6 @@ export default function KomentarPage() {
     const pass = (form.elements.namedItem("password") as HTMLInputElement)
       ?.value;
 
-    // Username dan password baru: Arleyxa / 160407
     if (user === "Arleyxa" && pass === "160407") {
       setIsAdmin(true);
       setShowLoginModal(false);
@@ -155,11 +154,56 @@ export default function KomentarPage() {
   return (
     <section
       id="komentar"
-      className="py-12 md:py-20 bg-[#0A0A1F] text-white relative min-h-screen transition-colors duration-500"
+      className="relative w-full min-h-screen bg-[#121214] text-[#e5e1e4] py-16 md:py-24 overflow-hidden font-body transition-colors duration-500"
     >
+      {/* Global Style Injections */}
+      <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap");
+
+        .font-display {
+          font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .font-body {
+          font-family: "Inter", sans-serif;
+        }
+
+        .bg-grid-pattern {
+          background-image: radial-gradient(
+            rgba(255, 255, 255, 0.08) 1px,
+            transparent 1px
+          );
+          background-size: 24px 24px;
+        }
+
+        .radial-mask {
+          mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+          -webkit-mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+        }
+
+        .text-gradient {
+          background: linear-gradient(to right, #ffffff, #8e9192);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      `}</style>
+
+      {/* Background Atmosphere & Grid */}
+      <div className="absolute inset-0 z-0 bg-grid-pattern radial-mask pointer-events-none opacity-50" />
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
+
       {alertMessage && <CustomAlert message={alertMessage} type={alertType} />}
 
-      <div className="container mx-auto px-4 max-w-lg lg:max-w-5xl">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-16 relative z-10 w-full">
         <HeaderSection
           onGoBack={handleGoBack}
           onRefresh={() => fetchKomentar(currentPage)}
@@ -169,7 +213,12 @@ export default function KomentarPage() {
           onLogout={() => setIsAdmin(false)}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start mt-8"
+        >
           {/* Form Komentar */}
           <CommentForm
             onSubmit={handleSubmit}
@@ -192,7 +241,7 @@ export default function KomentarPage() {
             onPrevPage={handlePrevPage}
             totalCount={totalCount}
           />
-        </div>
+        </motion.div>
       </div>
 
       <AdminLoginModal

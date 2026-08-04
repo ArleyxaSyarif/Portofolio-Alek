@@ -1,12 +1,13 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { ChevronLeft, ChevronRight, Award, Zap } from "lucide-react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { ChevronLeft, ChevronRight, Award, ShieldCheck, Building2 } from "lucide-react";
 import { sertifikat as sertifikatData } from "@/data/sertifikat";
 
 const Sertifikat = () => {
   const [currentSerti, setCurrentSerti] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(1);
+  const [direction, setDirection] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -23,234 +24,248 @@ const Sertifikat = () => {
 
   const goNext = () => {
     if (currentSerti < maxIndex) {
+      setDirection(1);
       setCurrentSerti(currentSerti + 1);
     }
   };
 
   const goPrev = () => {
     if (currentSerti > 0) {
+      setDirection(-1);
       setCurrentSerti(currentSerti - 1);
     }
+  };
+
+  const goToPage = (pageIndex: number) => {
+    setDirection(pageIndex > currentSerti ? 1 : -1);
+    setCurrentSerti(pageIndex);
   };
 
   const canGoPrev = currentSerti > 0;
   const canGoNext = currentSerti < maxIndex;
 
-  // Hitung item yang ditampilkan
   const startIdx = currentSerti * itemsPerView;
   const visibleItems = sertifikatData.slice(startIdx, startIdx + itemsPerView);
+  const totalPages = Math.ceil(sertifikatData.length / itemsPerView);
 
   return (
-    <motion.div
+    <section
       ref={ref}
-      initial={{ opacity: 0, filter: "blur(10px)" }}
-      animate={
-        isInView
-          ? { opacity: 1, filter: "blur(0px)" }
-          : { opacity: 0, filter: "blur(10px)" }
-      }
-      transition={{ duration: 1.5, ease: "easeInOut" }}
-      className="relative py-20 md:py-32 bg-gradient-to-b from-slate-900 via-slate-950 to-black overflow-hidden"
       id="sertifikasi"
+      className="relative w-full min-h-screen bg-[#121214] text-[#e5e1e4] py-24 md:py-32 overflow-hidden flex flex-col justify-center font-body"
     >
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-      </div>
+      {/* Global & Layout Styles */}
+      <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap");
 
-      <div className="relative max-w-7xl mx-auto px-4 md:px-8">
+        .font-display {
+          font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .font-body {
+          font-family: "Inter", sans-serif;
+        }
+
+        .bg-grid-pattern {
+          background-image: radial-gradient(
+            rgba(255, 255, 255, 0.1) 1px,
+            transparent 1px
+          );
+          background-size: 24px 24px;
+        }
+
+        .radial-mask {
+          mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+          -webkit-mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+        }
+
+        .glass-card {
+          background: rgba(30, 30, 32, 0.7);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .text-gradient {
+          background: linear-gradient(to right, #ffffff, #8e9192);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      `}</style>
+
+      {/* Background Grid Pattern */}
+      <div className="absolute inset-0 z-0 bg-grid-pattern radial-mask pointer-events-none opacity-50" />
+
+      <div className="max-w-[1280px] mx-auto px-5 md:px-16 relative z-10 w-full">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="mb-16 md:mb-20 text-center md:text-left max-w-3xl"
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Award className="w-8 h-8 text-blue-400" />
-            <span className="text-sm font-semibold text-blue-400 uppercase tracking-widest">
-              Achievements
-            </span>
-            <Award className="w-8 h-8 text-blue-400" />
+          {/* Badge Top */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-[#201f21]/80 backdrop-blur-md mb-6 text-xs font-semibold font-body tracking-wider text-[#e5e1e4] uppercase shadow-sm">
+            <Award className="w-3.5 h-3.5 text-[#8e9192]" />
+            <span>Pencapaian & Sertifikasi</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-white via-blue-200 to-purple-400 bg-clip-text text-transparent">
+
+          <h1 className="font-display text-4xl md:text-7xl font-bold tracking-tight text-gradient mb-6">
             Sertifikasi & Penghargaan
           </h1>
-          <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Perjalanan pembelajaran dan pengembangan profesional dalam industri
-            teknologi
+          <p className="font-body text-base md:text-lg text-[#c4c7c8] leading-relaxed">
+            Perjalanan pembelajaran terstruktur, kredensial resmi, dan lisensi
+            profesional yang memvalidasi keahlian saya dalam industri teknologi.
           </p>
         </motion.div>
 
         {/* Slider Container */}
-        <div className="mb-12">
-          <div className="rounded-2xl">
-            <div className={`grid gap-8 ${itemsPerView === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        <div className="min-h-[460px] mb-12">
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.div
+              key={currentSerti}
+              custom={direction}
+              initial={{ opacity: 0, x: direction > 0 ? 80 : -80 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: direction > 0 ? -80 : 80 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className={`grid gap-8 ${itemsPerView === 2 ? "grid-cols-2" : "grid-cols-1"
+                }`}
+            >
               {visibleItems.map((item, index) => (
-                <motion.div
+                <div
                   key={startIdx + index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
+                  className="glass-card rounded-2xl p-6 md:p-8 flex flex-col justify-between h-full group hover:scale-[1.01] transition-all duration-300 relative overflow-hidden cursor-pointer hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] border border-white/15"
                 >
-                  <motion.div
-                    whileHover={{ y: -10 }}
-                    className={`group relative h-full bg-gradient-to-br ${item.color} p-0.5 rounded-2xl overflow-hidden`}
-                  >
-                    {/* Shine effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  {/* Hover Bottom Accent Bar */}
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
-                    <div className="relative bg-slate-900/95 backdrop-blur-xl rounded-2xl p-6 md:p-8 h-full flex flex-col">
-                      {/* Icon and Badge */}
-                      <div className="flex items-end justify-between mb-6">
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            duration: 20,
-                            repeat: Infinity,
-                            ease: "linear",
-                          }}
-                          className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.color} p-0.5`}
-                        >
-                          <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center">
-                            <Zap className="w-5 h-5 text-white" />
-                          </div>
-                        </motion.div>
+                  {/* Top Bar / Category Icon */}
+                  <div>
+                    <div className="flex justify-between items-center mb-6">
+                      <div className="w-10 h-10 rounded-full bg-[#201f21] border border-white/10 flex items-center justify-center text-white">
+                        <ShieldCheck className="w-5 h-5 text-[#c6c6c7]" />
                       </div>
+                      <span className="text-xs font-semibold font-body text-[#8e9192] uppercase tracking-wider bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                        Verified Certificate
+                      </span>
+                    </div>
 
-                      {/* Certificate Images */}
-                      <div className="grid grid-cols-2 gap-3 mb-6 rounded-lg overflow-hidden border border-white/10">
-                        <div className="aspect-video bg-slate-800 rounded-lg overflow-hidden">
+                    {/* Certificate Preview Images */}
+                    <div className="grid grid-cols-2 gap-3 mb-6 rounded-xl overflow-hidden border border-white/10 bg-black/40 p-1.5">
+                      {item.img1 && (
+                        <div className="aspect-video bg-[#1a1a1c] rounded-lg overflow-hidden relative group/img">
                           <img
                             src={item.img1}
-                            alt={item.alt1}
-                            className="w-full h-full object-cover"
+                            alt={item.alt1 || item.title}
+                            className="w-full h-full object-cover  opacity-80 group-hover/img:grayscale-0 group-hover/img:opacity-100 transition-all duration-300"
                           />
                         </div>
-                        <div className="aspect-video bg-slate-800 rounded-lg overflow-hidden">
+                      )}
+                      {item.img2 && (
+                        <div className="aspect-video bg-[#1a1a1c] rounded-lg overflow-hidden relative group/img">
                           <img
                             src={item.img2}
-                            alt={item.alt2}
-                            className="w-full h-full object-cover"
+                            alt={item.alt2 || item.title}
+                            className="w-full h-full object-cover  opacity-80 group-hover/img:grayscale-0 group-hover/img:opacity-100 transition-all duration-300"
                           />
                         </div>
-                      </div>
+                      )}
+                    </div>
 
-                      {/* Content */}
-                      <div className="flex-grow">
-                        <h3
-                          className={`text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}
-                        >
-                          {item.title}
-                        </h3>
-                        <p className="text-gray-300 text-base mb-4 leading-relaxed">
-                          {item.description}
-                        </p>
-                      </div>
+                    {/* Content */}
+                    <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-3 line-clamp-1">
+                      {item.title}
+                    </h3>
+                    <p className="font-body text-sm md:text-base text-[#c4c7c8] mb-6 leading-relaxed line-clamp-3">
+                      {item.description}
+                    </p>
 
-                      {/* Skills Tags */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {item.skills.map((skill, idx) => (
-                          <motion.span
+                    {/* Skills Tags */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {item.skills &&
+                        item.skills.map((skill: string, idx: number) => (
+                          <span
                             key={idx}
-                            whileHover={{ scale: 1.05 }}
-                            className={`px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r ${item.color} bg-clip-text text-transparent border border-white/10 hover:border-white/30 transition-colors`}
+                            className="bg-[#201f21] text-[#e5e1e4] font-body text-xs font-semibold px-3 py-1 rounded-full border border-white/5"
                           >
                             {skill}
-                          </motion.span>
+                          </span>
                         ))}
-                      </div>
-
-                      {/* Organization */}
-                      <div className="pt-4 border-t border-white/10">
-                        <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">
-                          Organized By
-                        </p>
-                        <p className="font-semibold text-white">
-                          {item.button}
-                        </p>
-                      </div>
                     </div>
-                  </motion.div>
-                </motion.div>
+                  </div>
+
+                  {/* Organization Footer */}
+                  <div className="pt-4 border-t border-white/10 mt-auto flex items-center justify-between font-body text-xs">
+                    <div className="flex items-center gap-2">
+                      <Building2 className="w-4 h-4 text-[#8e9192]" />
+                      <span className="text-[#8e9192]">Penyelenggara:</span>
+                      <span className="font-semibold text-white">
+                        {item.button || "Lembaga Resmi"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        {/* Navigation Buttons */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 0.5 }}
-          className="flex justify-center items-center gap-6"
-        >
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={goPrev}
-            disabled={!canGoPrev}
-            className={`relative p-3 rounded-full transition-all duration-300 group ${
-              canGoPrev
-                ? "bg-gradient-to-r from-blue-500 to-blue-600 hover:shadow-lg hover:shadow-blue-500/50"
-                : "bg-gray-700 cursor-not-allowed opacity-50"
-            }`}
-          >
-            <div className="absolute inset-0 rounded-full bg-blue-400/20 blur-lg group-hover:blur-xl transition-all opacity-0 group-hover:opacity-100"></div>
-            <ChevronLeft className="relative w-6 h-6 text-white" />
-          </motion.button>
-
-          {/* Dots indicator */}
-          <div className="flex gap-2">
-            {Array.from({ length: Math.ceil(sertifikatData.length / itemsPerView) }).map((_, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ scale: 1.2 }}
-                onClick={() => setCurrentSerti(idx)}
-                className={`h-2 rounded-full cursor-pointer transition-all ${
-                  idx === currentSerti
-                    ? "bg-gradient-to-r from-blue-500 to-purple-500 w-8"
-                    : "bg-gray-600 w-2 hover:bg-gray-500"
-                }`}
-              />
-            ))}
-          </div>
-
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={goNext}
-            disabled={!canGoNext}
-            className={`relative p-3 rounded-full transition-all duration-300 group ${
-              canGoNext
-                ? "bg-gradient-to-r from-purple-500 to-purple-600 hover:shadow-lg hover:shadow-purple-500/50"
-                : "bg-gray-700 cursor-not-allowed opacity-50"
-            }`}
-          >
-            <div className="absolute inset-0 rounded-full bg-purple-400/20 blur-lg group-hover:blur-xl transition-all opacity-0 group-hover:opacity-100"></div>
-            <ChevronRight className="relative w-6 h-6 text-white" />
-          </motion.button>
-        </motion.div>
-
-        {/* Counter */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 0.7 }}
-          className="text-center mt-8"
-        >
-          <p className="text-gray-400 text-sm">
-            <span className="font-bold text-white">{currentSerti + 1}</span>{" "}
-            dari{" "}
-            <span className="font-bold text-white">
-              {Math.ceil(sertifikatData.length / itemsPerView)}
-            </span>{" "}
-            grup sertifikat
+        {/* Navigation Controls */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-4 border-t border-white/5 font-body">
+          {/* Indicator Info */}
+          <p className="text-xs text-[#8e9192]">
+            Menampilkan Halaman{" "}
+            <span className="font-bold text-white">{currentSerti + 1}</span> dari{" "}
+            <span className="font-bold text-white">{totalPages}</span>
           </p>
-        </motion.div>
+
+          {/* Buttons & Dots */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={goPrev}
+              disabled={!canGoPrev}
+              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-[#e5e1e4] hover:bg-white/5 hover:border-white/40 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
+              aria-label="Sebelumnya"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            {/* Dots */}
+            <div className="flex gap-2 items-center">
+              {Array.from({ length: totalPages }).map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => goToPage(idx)}
+                  className={`rounded-full transition-all duration-300 ${currentSerti === idx
+                    ? "w-2.5 h-2.5 bg-white scale-125"
+                    : "w-2 h-2 bg-[#444748] hover:bg-[#8e9192]"
+                    }`}
+                  aria-label={`Halaman ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={goNext}
+              disabled={!canGoNext}
+              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-[#e5e1e4] hover:bg-white/5 hover:border-white/40 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
+              aria-label="Berikutnya"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </section>
   );
 };
 

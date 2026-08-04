@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Lock, X } from "lucide-react";
+import { Lock, X, User, KeyRound } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface AdminLoginModalProps {
     isVisible: boolean;
@@ -14,44 +15,100 @@ const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
     onClose,
     onLogin,
 }) => {
-    if (!isVisible) return null;
-
     return (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[999] transition-opacity duration-300">
-            <div className="bg-[#1F1F47] p-8 rounded-2xl border border-blue-700/50 w-full max-w-sm mx-4 shadow-2xl shadow-blue-900/40 transform scale-100 transition-transform duration-300 ease-out">
-                <h3 className="text-2xl mb-4 text-blue-400 font-bold flex items-center space-x-2">
-                    <Lock size={20} /> <span>Akses Admin</span>
-                </h3>
-
-                <form onSubmit={onLogin}>
-                    <input
-                        name="username"
-                        placeholder="Username"
-                        className="bg-[#161633] w-full p-3 mb-3 rounded-lg text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-                        required
+        <AnimatePresence>
+            {isVisible && (
+                <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
+                    {/* Backdrop Blur */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={onClose}
+                        className="absolute inset-0 bg-black/75 backdrop-blur-md"
                     />
 
-                    <input
-                        name="password"
-                        type="password"
-                        placeholder="Password"
-                        className="bg-[#161633] w-full p-3 mb-5 rounded-lg text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-                        required
-                    />
+                    {/* Modal Container */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                        className="relative w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-[#201f21]/90 backdrop-blur-xl p-6 sm:p-8 text-[#e5e1e4] shadow-2xl"
+                    >
+                        {/* Top Light Accent Line */}
+                        <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-                    <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full w-full font-bold transition duration-200 transform active:scale-[0.98] shadow-md hover:shadow-lg shadow-blue-900/50">
-                        Login
-                    </button>
-                </form>
+                        {/* Close Button */}
+                        <button
+                            onClick={onClose}
+                            type="button"
+                            className="absolute top-4 right-4 p-1.5 rounded-full text-[#8e9192] hover:text-white hover:bg-white/10 transition-colors duration-200"
+                            aria-label="Tutup modal"
+                        >
+                            <X size={16} />
+                        </button>
 
-                <button
-                    className="text-blue-400 border border-blue-600 hover:bg-blue-900/40 hover:text-cyan-300 transition duration-300 block mx-auto mt-5 flex items-center space-x-1 py-2 px-4 rounded-full text-sm font-medium transform active:scale-95"
-                    onClick={onClose}
-                >
-                    <X size={14} /> <span>Batal</span>
-                </button>
-            </div>
-        </div>
+                        {/* Header */}
+                        <div className="flex items-center gap-3.5 mb-6">
+                            <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-white">
+                                <Lock size={18} />
+                            </div>
+                            <div>
+                                <h3 className="font-display text-lg font-bold text-white tracking-tight">
+                                    Akses Admin
+                                </h3>
+                                <p className="font-body text-xs text-[#8e9192]">
+                                    Masuk untuk mengelola komentar
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Form */}
+                        <form onSubmit={onLogin} className="space-y-4">
+                            <div className="relative">
+                                <User
+                                    size={16}
+                                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8e9192]"
+                                />
+                                <input
+                                    name="username"
+                                    type="text"
+                                    placeholder="Username"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-[#8e9192] focus:outline-none focus:border-white/30 focus:bg-white/[0.08] transition-all duration-200"
+                                    required
+                                    autoComplete="username"
+                                />
+                            </div>
+
+                            <div className="relative">
+                                <KeyRound
+                                    size={16}
+                                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8e9192]"
+                                />
+                                <input
+                                    name="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-[#8e9192] focus:outline-none focus:border-white/30 focus:bg-white/[0.08] transition-all duration-200"
+                                    required
+                                    autoComplete="current-password"
+                                />
+                            </div>
+
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                type="submit"
+                                className="w-full py-3.5 mt-2 rounded-xl bg-white text-[#121214] font-bold text-xs uppercase tracking-wider hover:bg-[#e5e1e4] transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                            >
+                                Login
+                            </motion.button>
+                        </form>
+                    </motion.div>
+                </div>
+            )}
+        </AnimatePresence>
     );
 };
 

@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Github,
+  Folder,
+  FolderGit2,
   ExternalLink,
   ChevronLeft,
   ChevronRight,
-  Calendar,
 } from "lucide-react";
 
 interface Repo {
@@ -25,7 +25,6 @@ export default function ProjectsPage() {
   const [repos, setRepos] = useState<Repo[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const itemsPerPage = 3;
 
   useEffect(() => {
@@ -34,11 +33,12 @@ export default function ProjectsPage() {
     )
       .then((res) => res.json())
       .then((data: Repo[]) => {
-        // Sort by stars and updated date
-        const sorted = data.sort(
-          (a, b) => b.stargazers_count - a.stargazers_count
-        );
-        setRepos(sorted);
+        if (Array.isArray(data)) {
+          const sorted = data.sort(
+            (a, b) => b.stargazers_count - a.stargazers_count
+          );
+          setRepos(sorted);
+        }
       })
       .catch((err) => {
         console.error("Error fetching repos:", err);
@@ -65,27 +65,21 @@ export default function ProjectsPage() {
     setCurrentIndex(newIndex);
   };
 
-  const getLanguageColor = (language: string | null) => {
-    const colors: { [key: string]: string } = {
-      JavaScript: "from-yellow-400 to-yellow-600",
-      TypeScript: "from-blue-500 to-blue-700",
-      Python: "from-green-500 to-green-700",
-      Java: "from-red-500 to-red-700",
-      PHP: "from-purple-500 to-purple-700",
-      CSS: "from-pink-500 to-pink-700",
-      HTML: "from-orange-500 to-orange-700",
-      Go: "from-cyan-500 to-cyan-700",
-      Rust: "from-orange-600 to-orange-800",
-    };
-    return colors[language || ""] || "from-gray-500 to-gray-700";
-  };
+  const formatTimeAgo = (dateString: string) => {
+    const updated = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - updated.getTime()) / 1000);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      year: "numeric",
-    });
+    const days = Math.floor(diffInSeconds / 86400);
+    if (days < 1) return "Updated today";
+    if (days === 1) return "Updated 1d ago";
+    if (days < 7) return `Updated ${days}d ago`;
+    
+    const weeks = Math.floor(days / 7);
+    if (weeks < 4) return `Updated ${weeks}w ago`;
+
+    const months = Math.floor(days / 30);
+    return `Updated ${months}m ago`;
   };
 
   const visibleRepos = repos.slice(currentIndex, currentIndex + itemsPerPage);
@@ -93,246 +87,201 @@ export default function ProjectsPage() {
   const currentPage = Math.floor(currentIndex / itemsPerPage);
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
+    <section
+      id="projek"
+      className="relative w-full min-h-screen bg-[#121214] text-[#e5e1e4] pt-32 pb-24 overflow-hidden flex flex-col justify-center font-body"
+    >
+      {/* Import Font & Global Styling untuk Monokrom & Tipografi */}
+      <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap");
 
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
+        .font-display {
+          font-family: "Plus Jakarta Sans", sans-serif;
+        }
 
-      {/* Radial Gradient Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
+        .font-body {
+          font-family: "Inter", sans-serif;
+        }
 
-      {/* Floating Orbs */}
-      <motion.div
-        className="absolute top-1/4 left-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-        animate={{
-          x: [0, 100, 0],
-          y: [0, 50, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-        animate={{
-          x: [0, -100, 0],
-          y: [0, -50, 0],
-          scale: [1, 1.3, 1],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
+        .bg-grid-pattern {
+          background-image: radial-gradient(
+            rgba(255, 255, 255, 0.1) 1px,
+            transparent 1px
+          );
+          background-size: 24px 24px;
+        }
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 md:py-24">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6"
-            whileHover={{ scale: 1.05 }}
-          >
-            <Github className="w-4 h-4 text-blue-400" />
-            <span className="text-sm text-blue-300 font-medium">
-              Open Source Portfolio
-            </span>
-          </motion.div>
+        .radial-mask {
+          mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+          -webkit-mask-image: radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+          );
+        }
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span
-              className="bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent"
-              id="projek"
-            >
-              Projek
-            </span>
+        .glass-card {
+          background: rgba(30, 30, 32, 0.7);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .text-gradient {
+          background: linear-gradient(to right, #ffffff, #8e9192);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      `}</style>
+
+      {/* Background Pattern */}
+      <div className="absolute inset-0 z-0 bg-grid-pattern radial-mask pointer-events-none opacity-50" />
+
+      <div className="max-w-[1280px] mx-auto px-5 md:px-16 relative z-10 w-full">
+        {/* Header Section */}
+        <div className="mb-16 md:mb-24 text-center md:text-left max-w-3xl">
+          {/* Badge Di Atas Projek */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-[#201f21]/80 backdrop-blur-md mb-6 text-xs font-semibold font-body tracking-wider text-[#e5e1e4] uppercase shadow-sm">
+            <FolderGit2 className="w-3.5 h-3.5 text-[#8e9192]" />
+            <span>Portofolio Repositori</span>
+          </div>
+
+          <h1 className="font-display text-4xl md:text-7xl font-bold tracking-tight text-gradient mb-6">
+            Projek
           </h1>
-
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
-            Jelajahi kumpulan{" "}
-            <span className="text-blue-400 font-semibold">
-              {repos.length} repositori
-            </span>{" "}
-            saya yang menampilkan berbagai teknologi dan inovasi
+          <p className="font-body text-lg text-[#c4c7c8] leading-relaxed">
+            Jelajahi kumpulan repositori saya. Koleksi open-source yang berfokus
+            pada pengembangan web modern, desain UI/UX, dan eksperimen teknis.
+            Menampilkan sekitar {repos.length || "100+"} repositori.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Projects Grid with Animation */}
-        <div className="mb-12 relative">
+        {/* Projects Grid Slider */}
+        <div className="min-h-[380px] mb-16">
           <AnimatePresence mode="wait" initial={false} custom={direction}>
             <motion.div
               key={currentIndex}
               custom={direction}
-              initial={{ opacity: 0, x: direction > 0 ? 300 : -300 }}
+              initial={{ opacity: 0, x: direction > 0 ? 80 : -80 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction > 0 ? -300 : 300 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+              exit={{ opacity: 0, x: direction > 0 ? -80 : 80 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
-              {visibleRepos.map((repo, index) => (
-                <motion.div
+              {visibleRepos.map((repo) => (
+                <div
                   key={repo.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                  className="group relative"
+                  className="glass-card rounded-xl p-6 flex flex-col h-full group hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden cursor-pointer hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
                 >
-                  {/* Card */}
-                  <div className="relative h-full bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl rounded-2xl overflow-hidden border border-gray-700/50 shadow-2xl transition-all duration-500 hover:border-blue-500/50 hover:shadow-blue-500/25 hover:scale-105">
-                    {/* Top Badge - Language */}
-                    {repo.language && (
-                      <div className="absolute top-4 left-4 z-10">
-                        <div
-                          className={`px-3 py-1.5 bg-gradient-to-r ${getLanguageColor(
-                            repo.language
-                          )} rounded-full text-white text-xs font-bold shadow-lg`}
-                        >
-                          {repo.language}
-                        </div>
-                      </div>
-                    )}
+                  {/* Hover Bottom Accent Bar */}
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
-                    {/* Animated gradient header */}
-                    <div
-                      className={`relative h-15 bg-gradient-to-br ${getLanguageColor(
-                        repo.language
-                      )} flex items-center justify-center overflow-hidden`}
-                    >
-                      <motion.div
-                        className="absolute inset-0 bg-black/20"
-                        animate={{
-                          background:
-                            hoveredIndex === index
-                              ? "radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%)"
-                              : "radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.2) 100%)",
-                        }}
-                        transition={{ duration: 0.3 }}
-                      />
-
-                      {/* Hover overlay */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
-                        className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center"
-                      ></motion.div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 space-y-4">
-                      <h2 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
-                        {repo.name}
-                      </h2>
-
-                      <p className="text-gray-400 text-sm leading-relaxed line-clamp-2 min-h-[40px]">
-                        {repo.description || "No description available"}
-                      </p>
-
-                      {/* Topics */}
-                      {repo.topics && repo.topics.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {repo.topics.slice(0, 3).map((topic) => (
-                            <span
-                              key={topic}
-                              className="px-2 py-1 text-xs bg-blue-500/10 text-blue-300 rounded-md border border-blue-500/20"
-                            >
-                              {topic}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Footer */}
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-700/50">
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
-                          <Calendar className="w-3 h-3" />
-                          <span>{formatDate(repo.updated_at)}</span>
-                        </div>
-
-                        <a
-                          href={repo.html_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-medium group/link"
-                        >
-                          <span>GitHub</span>
-                          <ExternalLink className="w-4 h-4 transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Bottom accent */}
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                  {/* Top Bar / Card Title */}
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="font-display text-2xl font-bold text-white line-clamp-1">
+                      {repo.name}
+                    </h3>
+                    <Folder className="w-5 h-5 text-[#8e9192] group-hover:text-white transition-colors flex-shrink-0 ml-2" />
                   </div>
-                </motion.div>
+
+                  {/* Card Description */}
+                  <p className="font-body text-base text-[#c4c7c8] mb-6 flex-grow leading-relaxed line-clamp-3">
+                    {repo.description ||
+                      "Personal portfolio repository showcasing modern web development techniques and design implementations."}
+                  </p>
+
+                  {/* Tags / Topics */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {repo.topics && repo.topics.length > 0 ? (
+                      repo.topics.slice(0, 3).map((topic) => (
+                        <span
+                          key={topic}
+                          className="bg-[#201f21] text-[#e5e1e4] font-body text-xs font-semibold px-3 py-1 rounded-full border border-white/5"
+                        >
+                          {topic}
+                        </span>
+                      ))
+                    ) : (
+                      <>
+                        <span className="bg-[#201f21] text-[#e5e1e4] font-body text-xs font-semibold px-3 py-1 rounded-full border border-white/5">
+                          {repo.language || "HTML"}
+                        </span>
+                        <span className="bg-[#201f21] text-[#e5e1e4] font-body text-xs font-semibold px-3 py-1 rounded-full border border-white/5">
+                          Portfolio
+                        </span>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Card Footer */}
+                  <div className="flex justify-between items-center border-t border-white/10 pt-4 mt-auto font-body text-xs text-[#8e9192]">
+                    <span className="flex items-center gap-1.5 font-semibold text-[#8e9192]">
+                      <span className="w-2 h-2 rounded-full bg-[#c6c6c7]" />
+                      {repo.language || "Code"}
+                    </span>
+                    <div className="flex items-center gap-4">
+                      <span className="font-semibold text-[#8e9192]">
+                        {formatTimeAgo(repo.updated_at)}
+                      </span>
+                      <a
+                        href={repo.html_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#e5e1e4] hover:text-white transition-colors flex items-center group-hover:translate-x-1 duration-200"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
               ))}
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Navigation Controls */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="flex flex-col items-center gap-6"
-        >
-          <div className="flex items-center gap-6">
-            <motion.button
-              onClick={goPrev}
-              disabled={currentIndex === 0}
-              whileHover={{ scale: 1.1, x: -5 }}
-              whileTap={{ scale: 0.95 }}
-              className="group relative p-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 disabled:opacity-30 disabled:cursor-not-allowed shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-            >
-              <ChevronLeft className="w-6 h-6 text-white" />
-              <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                Previous
-              </span>
-            </motion.button>
+        {/* Pagination Controls */}
+        <div className="flex justify-center items-center gap-4 mt-12 font-body">
+          <button
+            onClick={goPrev}
+            disabled={currentIndex === 0}
+            className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-[#e5e1e4] hover:bg-white/5 hover:border-white/40 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
+            aria-label="Sebelumnya"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
 
-            {/* Page indicators */}
-            <div className="flex gap-2">
-              {Array.from({ length: totalPages }).map((_, idx) => (
-                <motion.button
-                  key={idx}
-                  onClick={() => goToPage(idx)}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    currentPage === idx
-                      ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500"
-                      : "w-2 bg-gray-600 hover:bg-gray-500"
-                  }`}
-                />
-              ))}
-            </div>
-
-            <motion.button
-              onClick={goNext}
-              disabled={currentIndex + itemsPerPage >= repos.length}
-              whileHover={{ scale: 1.1, x: 5 }}
-              whileTap={{ scale: 0.95 }}
-              className="group relative p-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 disabled:opacity-30 disabled:cursor-not-allowed shadow-lg hover:shadow-blue-500/50 transition-all duration-300"
-            >
-              <ChevronRight className="w-6 h-6 text-white" />
-              <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                Next
-              </span>
-            </motion.button>
+          <div className="flex gap-2 items-center">
+            {Array.from({ length: Math.min(totalPages, 5) }).map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => goToPage(idx)}
+                className={`rounded-full transition-all duration-300 ${
+                  currentPage === idx
+                    ? "w-2.5 h-2.5 bg-white scale-125"
+                    : "w-2 h-2 bg-[#444748] hover:bg-[#8e9192]"
+                }`}
+                aria-label={`Halaman ${idx + 1}`}
+              />
+            ))}
+            {totalPages > 5 && (
+              <span className="text-sm text-[#444748] mx-1">...</span>
+            )}
           </div>
 
-          {/* Counter */}
-          <p className="text-gray-500 text-sm">
-            Showing {currentIndex + 1}-
-            {Math.min(currentIndex + itemsPerPage, repos.length)} of{" "}
-            {repos.length} repositories
-          </p>
-        </motion.div>
+          <button
+            onClick={goNext}
+            disabled={currentIndex + itemsPerPage >= repos.length}
+            className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-[#e5e1e4] hover:bg-white/5 hover:border-white/40 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
+            aria-label="Berikutnya"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

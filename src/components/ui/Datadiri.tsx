@@ -2,279 +2,210 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
+  ChevronLeft,
   Code2,
-  Zap,
   Target,
-  Sparkles,
   ArrowRight,
   Github,
   Linkedin,
+  Mail,
 } from "lucide-react";
 
 const Datadiri = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-
   return (
-    <motion.section
+    <section
       ref={ref}
-      initial={{ opacity: 0, filter: "blur(10px)" }}
-      animate={
-        isInView
-          ? { opacity: 1, filter: "blur(0px)" }
-          : { opacity: 0, filter: "blur(10px)" }
-      }
-      transition={{ duration: 1.5, ease: "easeInOut" }}
-      className="relative w-full py-20 md:py-40 bg-black overflow-hidden"
       id="tentangsaya"
+      className="relative w-full py-20 px-4 md:px-8 bg-black text-white overflow-hidden min-h-screen flex items-center justify-center"
     >
-      {/* Animated background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="max-w-6xl mx-auto w-full">
+        {/* Top Badge */}
         <motion.div
-          animate={{ rotate: 360, y: [0, 30, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-32 -left-32 w-80 h-80 bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-full blur-3xl"
-        ></motion.div>
+          initial={{ opacity: 0, y: -20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ duration: 0.6 }}
+          className="flex justify-center mb-6"
+        >
+          <div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full border border-neutral-800 bg-neutral-900/80 backdrop-blur-md text-xs font-medium text-neutral-300">
+            <ChevronLeft className="w-3.5 h-3.5" />
+            <span>Tentang Saya</span>
+          </div>
+        </motion.div>
+
+        {/* Header Section */}
         <motion.div
-          animate={{ rotate: -360, y: [0, -30, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-600/30 to-cyan-600/30 rounded-full blur-3xl"
-        ></motion.div>
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-2 leading-tight">
+            Software Engineer
+          </h1>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
+            Passion & Precision.
+          </h2>
+          <p className="text-neutral-400 text-xs md:text-sm leading-relaxed max-w-xl mx-auto">
+            Mengubah ide menjadi solusi digital yang impactful. Memadukan keahlian
+            teknis dengan visi desain untuk pengalaman pengguna tingkat tinggi.
+          </p>
+        </motion.div>
+
+        {/* Main Content Grid */}
         <motion.div
-          animate={{ x: [0, 30, 0] }}
-          transition={{ duration: 15, repeat: Infinity }}
-          className="absolute top-1/3 right-1/4 w-60 h-60 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl"
-        ></motion.div>
-      </div>
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch"
+        >
+          {/* Left Column - Full Photo Card */}
+          {/* Left Column - Full Photo Card */}
+          <div className="lg:col-span-5 bg-[#121212] border border-neutral-800/80 rounded-3xl overflow-hidden relative min-h-[420px] lg:min-h-full group">
+            {/* Foto Profil dengan Efek Hover Zoom Halus */}
+            <img
+              src="/img/profil1.jpeg"
+              alt="Mohamad Arleyxa Syarif"
+              className="w-full h-full object-cover filter contrast-125 transition-transform duration-700 group-hover:scale-105"
+            />
 
-      {/* Grid background */}
-      <div className="absolute inset-0 opacity-[0.04]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              'url(\'data:image/svg+xml?utf8,<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="white" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)" /></svg>\')',
-          }}
-        ></div>
-      </div>
+            {/* Gradient Overlay (Memastikan teks & badge di atasnya terbaca jelas) */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/30 pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 md:px-8">
-        {/* Decorative top line */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-          transition={{ duration: 0.8 }}
-          className="h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent mx-auto mb-12 origin-left"
-        ></motion.div>
-
-        {/* Main Content - Vertical Stack */}
-        <div className="space-y-16">
-          {/* Top Section - Title and Intro */}
-          <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block mb-6"
-            >
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/50 bg-cyan-500/5 backdrop-blur">
-                <Sparkles className="w-4 h-4 text-cyan-400" />
-                <span className="text-sm font-semibold text-cyan-400 uppercase tracking-widest">
-                  Tentang Saya
-                </span>
-              </div>
-            </motion.div>
-
-            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-2">
-              Fullstack Developer Passionate
-            </p>
-            <p className="text-lg md:text-xl text-gray-400">
-              Mengubah ide menjadi
-              <span className="text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text mx-2 font-semibold">
-                solusi digital
+            {/* Badge Status (Atas Kiri) */}
+            <div className="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-md">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              yang impactful
-            </p>
-          </motion.div>
+              <span className="text-[11px] font-medium text-neutral-300 tracking-wider uppercase">
+                Available for work
+              </span>
+            </div>
 
-          {/* Middle Section - Image + Info Cards */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start"
-          >
-            {/* Profile Image - Left */}
-            <motion.div
-              whileHover={{ y: -10 }}
-              className="md:col-span-1 flex justify-center"
-            >
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-3xl opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-500 group-hover:scale-110"></div>
+            {/* Text Info Overlay (Bawah Kiri) */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 z-10 flex flex-col justify-end">
+              <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 mb-1">
+                Based in Indonesia
+              </span>
+              <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+                Mohamad Arleyxa S.
+              </h3>
+              <p className="text-xs text-neutral-400 mt-1">
+                Software Engineer & Frontend Developer
+              </p>
+            </div>
+          </div>
 
-                <div className="relative bg-black p-2 rounded-3xl border border-white/10 group-hover:border-cyan-500/50 transition-all overflow-hidden">
-                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-3xl overflow-hidden">
-                    <motion.img
-                      src="/img/alek.jpg"
-                      alt="Profile"
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    />
-                  </div>
-                </div>
+          {/* Right Column - Content Cards */}
+          <div className="lg:col-span-7 flex flex-col gap-6">
+            {/* The Journey Card */}
+            <div className="bg-[#121212] border border-neutral-800/80 rounded-3xl p-6 md:p-8">
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-4">
+                The Journey
+              </h3>
+              <div className="space-y-4 text-neutral-400 text-xs md:text-sm leading-relaxed">
+                <p>
+                  Saya adalah seorang Software Engineer dengan spesialisasi Frontend
+                  Development yang berfokus pada pengembangan aplikasi web modern. Saya
+                  percaya bahwa antarmuka yang baik bukan hanya menarik secara visual,
+                  tetapi juga cepat, aksesibel, dan mampu memberikan pengalaman pengguna
+                  yang optimal.
+                </p>
 
-                {/* Floating badge */}
-                <motion.div
-                  animate={{ y: [0, -12, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                  className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold rounded-full text-sm shadow-lg shadow-cyan-500/50"
-                >
-                  Full Stack Dev
-                </motion.div>
-              </div>
-            </motion.div>
-
-            {/* Info Cards - Right */}
-            <div className="md:col-span-2 space-y-5">
-              {/* About Card */}
-              <motion.div
-                whileHover={{ x: 10 }}
-                className="group relative p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent border border-purple-500/30 hover:border-purple-500/60 backdrop-blur-sm overflow-hidden transition-all"
-              >
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-purple-500/10 via-transparent to-transparent transition-all"></div>
-
-                <div className="relative">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex-shrink-0">
-                      <Code2 className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-2">
-                        Developer Passionate
-                      </h3>
-                      <p className="text-gray-300 text-sm leading-relaxed">
-                        Saya Mohamad Arleyxa Syarif, seorang developer yang
-                        menghadirkan passion dalam setiap proyek. Percaya bahwa
-                        setiap kode adalah karya seni untuk menyelesaikan
-                        masalah nyata.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Vision Card */}
-              <motion.div
-                whileHover={{ x: 10 }}
-                transition={{ delay: 0.05 }}
-                className="group relative p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-transparent border border-blue-500/30 hover:border-blue-500/60 backdrop-blur-sm overflow-hidden transition-all"
-              >
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-blue-500/10 via-transparent to-transparent transition-all"></div>
-
-                <div className="relative">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex-shrink-0">
-                      <Target className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-2">
-                        Visi Karir
-                      </h3>
-                      <p className="text-gray-300 text-sm leading-relaxed">
-                        Bercita-cita menjadi Fullstack Developer yang memimpin
-                        tim dengan dampak positif. Fokus mengasah skill dan
-                        terus belajar teknologi terbaru di industri.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Social Links */}
-              <div className="flex gap-3">
-                <motion.a
-                  href="https://github.com/arleyxasyarif"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-3 rounded-xl bg-gradient-to-br from-gray-800 to-black border border-white/10 hover:border-white/30 transition-all group hover:bg-gradient-to-br hover:from-purple-500/20 hover:to-pink-500/20"
-                >
-                  <Github className="w-5 h-5 text-white group-hover:text-purple-400 transition-colors" />
-                </motion.a>
-                <motion.a
-                  href="https://linkedin.com/in/mohamad-arleyxa-syarif-3b4b621b4"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-3 rounded-xl bg-gradient-to-br from-gray-800 to-black border border-white/10 hover:border-white/30 transition-all group hover:bg-gradient-to-br hover:from-blue-500/20 hover:to-cyan-500/20"
-                >
-                  <Linkedin className="w-5 h-5 text-white group-hover:text-blue-400 transition-colors" />
-                </motion.a>
+                <p>
+                  Sebagai lulusan SMK Informatika Pesat Bogor, saya telah mengembangkan
+                  berbagai proyek menggunakan React, Next.js, TypeScript, Tailwind CSS,
+                  Laravel, dan MySQL. Saya senang mempelajari teknologi baru serta
+                  membangun solusi digital yang berkualitas dengan pendekatan clean code
+                  dan performa yang optimal.
+                </p>
               </div>
             </div>
-          </motion.div>
 
-          {/* Stats Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
+            {/* Bottom Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* Developer Passionate Card */}
+              <div className="bg-[#121212] border border-neutral-800/80 rounded-3xl p-6 flex flex-col">
+                <div className="w-9 h-9 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center mb-4 text-neutral-300">
+                  <Code2 className="w-4 h-4" />
+                </div>
+                <h4 className="text-base font-bold text-white mb-2">
+                  Developer Passionate
+                </h4>
+                <p className="text-neutral-400 text-xs leading-relaxed">
+                  Membangun sistem dengan kode yang bersih, efisien, dan
+                  terstruktur. Mengutamakan performa dan skalabilitas dalam
+                  setiap baris instruksi.
+                </p>
+              </div>
 
+              {/* Visi Karir Card */}
+              <div className="bg-[#121212] border border-neutral-800/80 rounded-3xl p-6 flex flex-col">
+                <div className="w-9 h-9 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center mb-4 text-neutral-300">
+                  <Target className="w-4 h-4" />
+                </div>
+                <h4 className="text-base font-bold text-white mb-2">
+                  Visi Karir
+                </h4>
+                <p className="text-neutral-400 text-xs leading-relaxed">
+                  Menjadi arsitek solusi digital terkemuka yang mampu
+                  menjembatani kesenjangan antara kebutuhan bisnis kompleks dan
+                  desain antarmuka intuitif.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-          </motion.div>
-
-          {/* CTA Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
-          >
-            <a href="#projek">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-8 md:px-10 py-4 rounded-xl font-bold text-lg overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 group-hover:via-purple-500 transition-all duration-500"></div>
-                <div className="absolute inset-0.5 bg-black rounded-lg group-hover:bg-gray-900 transition-colors"></div>
-                <span className="relative flex items-center gap-2 justify-center text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 group-hover:from-purple-400 group-hover:to-pink-400 bg-clip-text font-bold">
-                  Lihat Proyek
-                  <ArrowRight className="w-5 h-5 text-blue-400 group-hover:text-pink-400 transition-colors" />
-                </span>
-              </motion.button>
-            </a>
-
-            <a href="#kontak">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-8 md:px-10 py-4 rounded-xl font-bold text-lg overflow-hidden border border-white/20 hover:border-white/40 transition-all"
-              >
-                <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 transition-all"></div>
-                <span className="relative text-white group-hover:text-cyan-400 transition-colors">
-                  Hubungi Saya
-                </span>
-              </motion.button>
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Decorative bottom line */}
+        {/* Bottom Actions & Social Icons */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto mt-16 origin-right"
-        ></motion.div>
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap items-center justify-center gap-4 mt-12"
+        >
+          <a
+            href="#projek"
+            className="px-6 py-3 rounded-full bg-white text-black font-semibold text-xs md:text-sm hover:bg-neutral-200 transition-colors flex items-center gap-2"
+          >
+            Lihat Proyek
+            <ArrowRight className="w-4 h-4" />
+          </a>
+
+          <a
+            href="#kontak"
+            className="px-6 py-3 rounded-full bg-[#121212] border border-neutral-800 text-white font-medium text-xs md:text-sm hover:bg-neutral-900 transition-colors flex items-center gap-2"
+          >
+            Hubungi Saya
+            <Mail className="w-4 h-4" />
+          </a>
+
+          <div className="flex items-center gap-2 ml-2">
+            <a
+              href="https://github.com/arleyxasyarif"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="p-3 rounded-full bg-[#121212] border border-neutral-800 text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
+            >
+              <Github className="w-4 h-4" />
+            </a>
+            <a
+              href="https://linkedin.com/in/mohamad-arleyxa-syarif-3b4b621b4"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="p-3 rounded-full bg-[#121212] border border-neutral-800 text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+          </div>
+        </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 
