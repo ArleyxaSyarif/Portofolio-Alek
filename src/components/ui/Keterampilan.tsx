@@ -7,11 +7,11 @@ import {
   FileCode2,
   Palette,
   Terminal,
-
   Layout,
   Zap,
   Database,
   Cpu,
+  GitBranch,
 } from "lucide-react";
 
 // Data Keterampilan Baris 1
@@ -36,8 +36,8 @@ const row2Skills = [
   { name: "Vscode", icon: Terminal },
   { name: "MySQL", icon: Database },
   { name: "SQL", icon: Database },
-  { name: "Git", icon: Terminal },
-  { name: "GitHub", icon: Terminal },
+  { name: "Git", icon: GitBranch },
+  { name: "GitHub", icon: GitBranch },
   { name: "Postman", icon: Terminal },
   { name: "Bootstrap", icon: Terminal },
   { name: "Android Studio", icon: Terminal },
