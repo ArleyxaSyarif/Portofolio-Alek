@@ -4,9 +4,7 @@ import React from "react";
 import { Mail, MapPin, Github, Linkedin, Instagram, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-interface ContactInfoProps { }
-
-const ContactInfo: React.FC<ContactInfoProps> = () => {
+const ContactInfo: React.FC = () => {
     const contactInfo = [
         {
             icon: Mail,
@@ -66,7 +64,6 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
             animate="visible"
             className="space-y-8"
         >
-            {/* Header Info */}
             <motion.div variants={itemVariants} className="space-y-3">
                 <h3 className="font-display text-2xl font-bold text-white tracking-tight">
                     Informasi Kontak
@@ -78,7 +75,6 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
                 </p>
             </motion.div>
 
-            {/* Direct Contact Cards */}
             <motion.div variants={itemVariants} className="space-y-3">
                 {contactInfo.map((info, idx) => {
                     const Icon = info.icon;
@@ -115,7 +111,6 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
                 })}
             </motion.div>
 
-            {/* Social Links Section */}
             <motion.div variants={itemVariants} className="space-y-3">
                 <p className="text-xs font-semibold text-[#8e9192] uppercase tracking-wider">
                     Temukan Saya Di Social Media
@@ -142,8 +137,6 @@ const ContactInfo: React.FC<ContactInfoProps> = () => {
                     })}
                 </div>
             </motion.div>
-
-
         </motion.div>
     );
 };

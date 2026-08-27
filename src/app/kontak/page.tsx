@@ -3,91 +3,59 @@
 import React, { useState } from "react";
 import { ChevronLeft, Sparkles } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import CustomAlert from "@/components/ui/CustomAlert";
 import WarningModal from "./components/WarningModal";
 import ContactForm from "./components/ContactForm";
 import ContactInfo from "./components/ContactInfo";
 import { Toaster } from "react-hot-toast";
 
 export default function KontakPage() {
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [alertMessage, setAlertMessage] = useState<string | null>(null);
-    const [alertType, setAlertType] = useState<"success" | "error">("success");
     const [showWarning, setShowWarning] = useState(true);
-
-    const triggerAlert = (msg: string, type: "success" | "error") => {
-        setAlertMessage(msg);
-        setAlertType(type);
-        setTimeout(() => setAlertMessage(null), 4000);
-    };
 
     const handleGoBack = () => {
         window.history.back();
-    };
-
-    const handleSubmit = async (
-        e: React.FormEvent,
-        data: { name: string; email: string; message: string }
-    ) => {
-        e.preventDefault();
-        if (!data.name.trim() || !data.email.trim() || !data.message.trim()) {
-            triggerAlert("Harap isi semua kolom!", "error");
-            return;
-        }
-
-        setIsSubmitting(true);
-
-        // Simulate API call
-        setTimeout(() => {
-            setIsSubmitting(false);
-            triggerAlert(
-                "Pesan berhasil dikirim! Saya akan segera membalasnya. 🚀",
-                "success"
-            );
-        }, 1500);
     };
 
     return (
         <section className="relative w-full min-h-screen bg-[#121214] text-[#e5e1e4] py-16 md:py-24 overflow-hidden flex flex-col justify-center font-body">
             {/* Global Style Injections */}
             <style jsx global>{`
-        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap");
+                @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap");
 
-        .font-display {
-          font-family: "Plus Jakarta Sans", sans-serif;
-        }
+                .font-display {
+                    font-family: "Plus Jakarta Sans", sans-serif;
+                }
 
-        .font-body {
-          font-family: "Inter", sans-serif;
-        }
+                .font-body {
+                    font-family: "Inter", sans-serif;
+                }
 
-        .bg-grid-pattern {
-          background-image: radial-gradient(
-            rgba(255, 255, 255, 0.08) 1px,
-            transparent 1px
-          );
-          background-size: 24px 24px;
-        }
+                .bg-grid-pattern {
+                    background-image: radial-gradient(
+                        rgba(255, 255, 255, 0.08) 1px,
+                        transparent 1px
+                    );
+                    background-size: 24px 24px;
+                }
 
-        .radial-mask {
-          mask-image: radial-gradient(
-            ellipse at center,
-            black 40%,
-            transparent 80%
-          );
-          -webkit-mask-image: radial-gradient(
-            ellipse at center,
-            black 40%,
-            transparent 80%
-          );
-        }
+                .radial-mask {
+                    mask-image: radial-gradient(
+                        ellipse at center,
+                        black 40%,
+                        transparent 80%
+                    );
+                    -webkit-mask-image: radial-gradient(
+                        ellipse at center,
+                        black 40%,
+                        transparent 80%
+                    );
+                }
 
-        .text-gradient {
-          background: linear-gradient(to right, #ffffff, #8e9192);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      `}</style>
+                .text-gradient {
+                    background: linear-gradient(to right, #ffffff, #8e9192);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+            `}</style>
 
             {/* Background Atmosphere & Grid */}
             <div className="absolute inset-0 z-0 bg-grid-pattern radial-mask pointer-events-none opacity-50" />
@@ -103,10 +71,6 @@ export default function KontakPage() {
                     onClose={() => setShowWarning(false)}
                 />
             </AnimatePresence>
-
-            {alertMessage && (
-                <CustomAlert message={alertMessage} type={alertType} />
-            )}
 
             {/* Main Container */}
             <div className="max-w-[1280px] mx-auto px-5 md:px-16 relative z-10 w-full">
@@ -149,7 +113,7 @@ export default function KontakPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
                     {/* Form Section */}
                     <div className="order-2 lg:order-1">
-                        <ContactForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+                        <ContactForm />
                     </div>
 
                     {/* Info Section */}

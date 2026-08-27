@@ -6,16 +6,12 @@ import toast from "react-hot-toast";
 import ReCAPTCHA from "react-google-recaptcha";
 import { motion } from "framer-motion";
 
-interface ContactFormProps {
-  onSubmit: (e: React.FormEvent, data: { name: string; email: string; message: string }) => void;
-  isSubmitting: boolean;
-}
-
-const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => {
+const ContactForm: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,22 +21,30 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
       return;
     }
 
-    const response = await fetch("/api/send-mail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, message, token: captchaToken }),
-    });
+    setIsSubmitting(true);
 
-    if (response.ok) {
-      toast.success("Pesan berhasil dikirim");
-      setName("");
-      setEmail("");
-      setMessage("");
-      setCaptchaToken(null);
-    } else {
-      toast.error("Pesan gagal dikirim");
+    try {
+      const response = await fetch("/api/send-mail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message, token: captchaToken }),
+      });
+
+      if (response.ok) {
+        toast.success("Pesan berhasil dikirim");
+        setName("");
+        setEmail("");
+        setMessage("");
+        setCaptchaToken(null);
+      } else {
+        toast.error("Pesan gagal dikirim");
+      }
+    } catch {
+      toast.error("Terjadi kesalahan jaringan.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -51,10 +55,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
       transition={{ duration: 0.6 }}
       className="bg-[#201f21]/70 backdrop-blur-xl p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl relative overflow-hidden"
     >
-      {/* Accent Glow Effect */}
       <div className="absolute -top-24 -right-24 w-48 h-48 bg-white/[0.03] rounded-full blur-2xl pointer-events-none" />
 
-      {/* Header Form */}
       <div className="flex items-center gap-3 mb-8 pb-4 border-b border-white/10">
         <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-white">
           <Send size={20} className="text-[#e5e1e4]" />
@@ -70,7 +72,6 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Input Nama */}
         <div>
           <label htmlFor="name" className="block text-xs font-semibold text-[#8e9192] uppercase tracking-wider mb-2">
             Nama Lengkap Anda
@@ -91,7 +92,6 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
           </div>
         </div>
 
-        {/* Input Email */}
         <div>
           <label htmlFor="email" className="block text-xs font-semibold text-[#8e9192] uppercase tracking-wider mb-2">
             Alamat Email
@@ -112,7 +112,6 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
           </div>
         </div>
 
-        {/* Input Pesan */}
         <div>
           <label htmlFor="message" className="block text-xs font-semibold text-[#8e9192] uppercase tracking-wider mb-2">
             Pesan
@@ -133,17 +132,15 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting }) => 
           </div>
         </div>
 
-        {/* ReCAPTCHA (Dark Theme) */}
         <div className="pt-2 overflow-x-auto">
           <ReCAPTCHA
-            sitekey="6LcTU2QsAAAAAC-X1tpG_dCRG5-dN-27wCp7abw7"
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LcTU2QsAAAAAC-X1tpG_dCRG5-dN-27wCp7abw7"}
             onChange={(token) => setCaptchaToken(token)}
             theme="dark"
             className="rounded-lg overflow-hidden border border-white/10"
           />
         </div>
 
-        {/* Submit Button */}
         <motion.button
           type="submit"
           disabled={isSubmitting}

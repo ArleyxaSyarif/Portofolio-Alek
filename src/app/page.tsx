@@ -8,6 +8,7 @@ import Sertifikat from "@/components/ui/Sertifikat";
 import Footer from "@/components/ui/Footer";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/ui/Navbar";
+import Kerja from "@/components/ui/Kerja";
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
@@ -30,6 +31,7 @@ export default function Home() {
       <Keterampilan />
       <Project />
       <Sertifikat />
+      <Kerja />
       <Footer />
     </main>
   );
